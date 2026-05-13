@@ -22,7 +22,18 @@
         }
     </script>
     <style>
-        @media print { body * { visibility: hidden; } #r-p, #r-p * { visibility: visible; } #r-p { position: absolute; left: 0; top: 0; width: 58mm; font-size: 12px; color: black; background: white;} }
+        /* Print Fix */
+        @media print { 
+            @page { margin: 0; }
+            html, body { height: auto !important; overflow: visible !important; background: white !important; }
+            body * { visibility: hidden; } 
+            #r-p, #r-p * { visibility: visible; } 
+            #r-p { 
+                position: absolute; left: 0; top: 0; width: 58mm; font-size: 12px; 
+                color: black !important; background: white !important; display: block !important; 
+                margin: 0; padding: 10px 5px; 
+            } 
+        }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         body { touch-action: manipulation; background-color: #f8fafc; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -69,6 +80,7 @@
             <button id="btn-payroll" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-users-three text-lg"></i> <span data-i18n="payroll">Payroll</span></button>
             <button id="btn-history" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-receipt text-lg"></i> <span data-i18n="history">Transactions</span></button>
             <button id="btn-reports" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-chart-line-up text-lg"></i> <span data-i18n="reports">Reports (P&L)</span></button>
+            <button id="btn-shift" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-clock text-lg"></i> <span data-i18n="shifts">Shift Logs</span></button>
             <button id="btn-settings" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-gear text-lg"></i> <span data-i18n="settings">Settings</span></button>
         </div>
 
@@ -129,7 +141,11 @@
 
         <div class="p-3 border-b border-slate-100 bg-slate-50/50 shrink-0">
             <div class="flex items-center gap-2 bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm focus-within:border-brand-500 transition"><i class="ph ph-user text-slate-400"></i>
-                <select id="customer-select" class="w-full bg-transparent border-none outline-none text-sm font-semibold text-slate-700 cursor-pointer appearance-none"><option value="" data-i18n="walkin">Walk-in Customer</option></select>
+                <select id="customer-select" class="w-full bg-transparent border-none outline-none text-sm font-semibold text-slate-700 cursor-pointer appearance-none">
+                    <option value="Walk-in" data-i18n="walkin">Walk-in Customer</option>
+                    <option value="Phone Order">Phone Order (ဖုန်းအော်ဒါ)</option>
+                    <option value="Online">Online Customer (အွန်လိုင်း)</option>
+                </select>
                 <i class="ph ph-caret-down text-slate-400 text-xs"></i>
             </div>
             <div class="mt-2 flex items-center justify-end gap-2 text-xs font-medium text-slate-500">
@@ -146,7 +162,9 @@
                 <div class="flex-1 bg-white border border-slate-200 rounded-xl p-2 flex items-center justify-between shadow-sm focus-within:border-brand-500 transition"><span data-i18n="tax" class="text-[10px] font-bold text-slate-400 uppercase ml-1">Tax%</span><input id="tax" type="number" value="0" class="w-14 text-right border-none outline-none text-sm font-bold text-slate-900 bg-transparent"></div>
             </div>
             <div class="mb-4 bg-white border border-slate-200 rounded-xl p-2.5 flex items-center shadow-sm focus-within:border-brand-500 transition"><div class="bg-indigo-50 p-1.5 rounded-lg ml-1 mr-2"><i class="ph ph-wallet text-brand-600"></i></div>
-                <select id="payment-method" class="w-full bg-transparent border-none outline-none text-sm font-semibold text-slate-700 appearance-none cursor-pointer"><option value="Cash">Cash</option><option value="Card">Card</option><option value="KPay">KPay</option><option value="WavePay">WavePay</option><option value="Credit">Credit (အကြွေး)</option></select>
+                <select id="payment-method" class="w-full bg-transparent border-none outline-none text-sm font-semibold text-slate-700 appearance-none cursor-pointer">
+                    <option value="Cash">Cash</option><option value="Card">Card</option><option value="KPay">KPay</option><option value="WavePay">WavePay</option><option value="AYA Pay">AYA PAY</option><option value="Credit">Credit (အကြွေး)</option>
+                </select>
                 <i class="ph ph-caret-down text-slate-400 text-xs pr-2"></i>
             </div>
             <div id="cart-summary" class="space-y-1.5 mb-4 text-sm font-medium border-t border-slate-100 pt-3"></div>
@@ -423,7 +441,13 @@
         const totalCost = window.cart.reduce((sum, i) => sum + ((i.costPrice || 0) * (i.qty || 1)), 0); 
         const disc = parseFloat(document.getElementById('discount').value) || 0; const tax = parseFloat(document.getElementById('tax').value) || 0;
         const total = (subTotal - (subTotal * disc / 100)) + ((subTotal - (subTotal * disc / 100)) * tax / 100);
-        const paymentMethod = document.getElementById('payment-method').value; const customerId = document.getElementById('customer-select').value;
+        const paymentMethod = document.getElementById('payment-method').value; 
+        
+        // Handle Customer Type
+        const custVal = document.getElementById('customer-select').value;
+        const isGeneric = ['Walk-in', 'Phone Order', 'Online'].includes(custVal);
+        const customerId = isGeneric ? null : custVal;
+        const customerName = isGeneric ? custVal : document.getElementById('customer-select').options[document.getElementById('customer-select').selectedIndex].text.split(' (')[0];
         
         try {
             const batch = writeBatch(db); const saleRef = doc(collection(db, "shops", shop_id, "sales"));
@@ -434,7 +458,9 @@
                 qty: i.qty || 1, productId: i.id 
             }));
             batch.set(saleRef, {
-                items: itemsToSave, subTotal, totalCost, discount: disc, tax, total, profit: total - totalCost, paymentMethod, customerId: customerId || null, createdAt: serverTimestamp(), userId: auth.currentUser?.uid || null
+                items: itemsToSave, subTotal, totalCost, discount: disc, tax, total, profit: total - totalCost, paymentMethod, 
+                customerType: custVal, customerId: customerId, customerName: customerName,
+                createdAt: serverTimestamp(), userId: auth.currentUser?.uid || null
             });
             window.cart.forEach(item => { batch.update(doc(db, "shops", shop_id, "products", item.id), { quantity: increment(-(item.qty || 1)) }); });
             
@@ -444,17 +470,18 @@
                 batch.update(doc(db, "shops", shop_id, "customers", customerId), { points: increment(Math.floor(total / 100)) });
             }
             await batch.commit();
-            printReceipt({items: itemsToSave, total, paymentMethod, date: new Date().toLocaleString()});
+            printReceipt({items: itemsToSave, total, paymentMethod, customer: customerName, date: new Date().toLocaleString()});
             window.clearCart(); document.getElementById('discount').value = 0; document.getElementById('tax').value = 0;
             if(!document.getElementById('cart-panel').classList.contains('translate-x-full')) toggleMobileCart();
         } catch(e) { alert('Checkout error: ' + e.message); }
     };
 
     function printReceipt(data) {
-        let h = `<center><img src="${shop_settings.logo || ''}" style="max-height:50px; display:${shop_settings.logo?'inline':'none'}"><h2 style="margin:5px 0 0;font-weight:900;text-transform:uppercase;">${shop_name}</h2><p style="font-size:10px;margin:2px 0;">${shop_settings.address || ''}<br>${shop_settings.phone || ''}</p><p style="font-size:10px;color:#666;">${data.date}</p><hr style="border-top:1px dashed #000;margin:10px 0;"></center><table style="width:100%;font-size:12px;">`;
+        let custLine = data.customer && data.customer !== 'Walk-in' ? `<p style="font-size:10px;margin:2px 0;font-weight:bold;">[${data.customer}]</p>` : '';
+        let h = `<center><img src="${shop_settings.logo || ''}" style="max-height:50px; display:${shop_settings.logo?'inline':'none'}"><h2 style="margin:5px 0 0;font-weight:900;text-transform:uppercase;">${shop_name}</h2><p style="font-size:10px;margin:2px 0;">${shop_settings.address || ''}<br>${shop_settings.phone || ''}</p><p style="font-size:10px;color:#666;">${data.date}</p>${custLine}<hr style="border-top:1px dashed #000;margin:10px 0;"></center><table style="width:100%;font-size:12px;">`;
         const g = data.items.reduce((a, c) => { const f = a.find(x => x.name === c.name); if (f) { f.qty+=c.qty; f.tt += (c.price*c.qty); } else { a.push({ ...c, tt: c.price*c.qty }); } return a; }, []);
         g.forEach(i => h += `<tr><td style="padding:4px 0;">${i.name} x${i.qty}</td><td align="right">${i.tt.toLocaleString()}</td></tr>`);
-        h += `</table><hr style="border-top:1px dashed #000;margin:10px 0;"><h3 align="right" style="margin:0;">TOTAL: ${data.total.toLocaleString()}</h3><p align="right" style="font-size:10px;margin:2px 0;">(${data.paymentMethod})</p><center><p style="font-size:10px;margin-top:20px;">${shop_settings.footer || 'Thank you!'}</p></center>`;
+        h += `</table><hr style="border-top:1px dashed #000;margin:10px 0;"><h3 align="right" style="margin:0;">TOTAL: ${data.total.toLocaleString()} Ks</h3><p align="right" style="font-size:10px;margin:2px 0;">(${data.paymentMethod})</p><center><p style="font-size:10px;margin-top:20px;">${shop_settings.footer || 'Thank you!'}</p></center>`;
         document.getElementById('r-p').innerHTML = h; window.print();
     }
 
@@ -462,7 +489,7 @@
         if (!document.getElementById('pos-main').classList.contains('hidden')) {
             onSnapshot(collection(db, "shops", shop_id, "customers"), (snap) => {
                 const sel = document.getElementById('customer-select'); if (!sel) return;
-                sel.innerHTML = `<option value="">${t('walkin')}</option>`;
+                sel.innerHTML = `<option value="Walk-in" data-i18n="walkin">Walk-in Customer</option><option value="Phone Order">Phone Order (ဖုန်းအော်ဒါ)</option><option value="Online">Online Customer (အွန်လိုင်း)</option>`;
                 snap.forEach(d => { const c = d.data(); sel.innerHTML += `<option value="${d.id}">${c.name} (${c.debt ? c.debt+' Ks Credit' : c.points+' pts'})</option>`; });
             });
         }
@@ -476,7 +503,7 @@
 
     // ---- ERP MODALS ----
 
-    // 1. INVENTORY + EDIT 
+    // 1. INVENTORY + EDIT / DELETE
     const showItemsModal = () => {
         openModal(`
             <div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4"><h2 class="text-xl font-bold"><i class="ph ph-package"></i> ${t('inventory')}</h2><button onclick="closeModal()"><i class="ph ph-x"></i></button></div>
@@ -503,7 +530,13 @@
         `);
         const invList = document.getElementById('inv-list');
         allProducts.forEach(p => {
-            invList.innerHTML += `<div class="bg-white p-3 rounded-xl border flex justify-between items-center text-sm"><div><b>${p.name}</b> ${p.variant?`(${p.variant})`:''} <span class="bg-slate-100 px-1 rounded text-xs">${p.category||''}</span><br><span class="text-xs text-slate-500">Retail: ${p.retailPrice||p.price||0} | Cost: ${p.costPrice||0} | Stock: <b class="${p.quantity<=5?'text-red-500':'text-green-600'}">${p.quantity} ${p.unit||''}</b> ${p.expiryDate ? '| EXP: '+p.expiryDate : ''}</span></div><div class="flex gap-2"><button onclick="editProduct('${p.id}')" class="text-blue-500 bg-slate-50 p-2 rounded-lg"><i class="ph ph-pencil-simple"></i></button><button onclick="deleteProduct('${p.id}')" class="text-red-500 bg-slate-50 p-2 rounded-lg"><i class="ph ph-trash"></i></button></div></div>`;
+            invList.innerHTML += `<div class="bg-white p-3 rounded-xl border flex justify-between items-center text-sm">
+                <div><b>${p.name}</b> ${p.variant?`(${p.variant})`:''} <span class="bg-slate-100 px-1 rounded text-xs">${p.category||''}</span><br><span class="text-xs text-slate-500">Retail: ${p.retailPrice||p.price||0} | Cost: ${p.costPrice||0} | Stock: <b class="${p.quantity<=5?'text-red-500':'text-green-600'}">${p.quantity} ${p.unit||''}</b> ${p.expiryDate ? '| EXP: '+p.expiryDate : ''}</span></div>
+                <div class="flex gap-2">
+                    <button onclick="editProduct('${p.id}')" class="text-blue-500 bg-slate-50 p-2 rounded-lg hover:bg-blue-50 transition"><i class="ph ph-pencil-simple text-lg"></i></button>
+                    <button onclick="deleteProduct('${p.id}')" class="text-red-500 bg-slate-50 p-2 rounded-lg hover:bg-red-50 transition"><i class="ph ph-trash text-lg"></i></button>
+                </div>
+            </div>`;
         });
         document.getElementById('save-item-btn').onclick = async () => {
             const name = document.getElementById('p-name').value.trim(), category = document.getElementById('p-cat').value.trim(), retailPrice = parseFloat(document.getElementById('p-retail').value), qty = parseInt(document.getElementById('p-qty').value);
@@ -535,8 +568,8 @@
                     <div class="col-span-2"><label class="text-xs font-bold text-slate-500 uppercase">Expire Date</label><input id="e-exp" type="date" value="${p.expiryDate||''}" class="w-full p-2 border rounded-lg text-sm"></div>
                 </div>
                 <div class="flex justify-end mt-4 gap-2">
-                    <button onclick="showItemsModal()" class="bg-slate-200 text-slate-700 px-4 py-2.5 rounded-lg font-bold text-sm">Cancel</button>
-                    <button id="update-item-btn" class="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-bold text-sm">Update Product</button>
+                    <button onclick="showItemsModal()" class="bg-slate-200 text-slate-700 px-4 py-2.5 rounded-lg font-bold text-sm hover:bg-slate-300">Cancel</button>
+                    <button id="update-item-btn" class="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-bold text-sm hover:bg-blue-700">Update Product</button>
                 </div>
             </div>
         `);
@@ -548,17 +581,17 @@
         };
     };
 
-    window.deleteProduct = async (id) => { if(confirm('Delete?')) { await deleteDoc(doc(db, "shops", shop_id, "products", id)); showItemsModal(); } };
+    window.deleteProduct = async (id) => { if(confirm('Are you sure you want to delete this product?')) { await deleteDoc(doc(db, "shops", shop_id, "products", id)); showItemsModal(); } };
     linkButtons('btn-items', 'btn-items-m', showItemsModal);
 
     // 2. PURCHASES 
     const showPurchasesModal = async () => {
-        openModal(`<div class="text-center p-10">Loading...</div>`);
+        openModal(`<div class="text-center p-10 font-bold text-slate-500">Loading...</div>`);
         const snap = await getDocs(query(collection(db, "shops", shop_id, "purchases"), orderBy("date", "desc")));
-        let html = `<div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold"><i class="ph ph-shopping-cart"></i> ${t('purchases')}</h2><button onclick="closeModal()"><i class="ph ph-x"></i></button></div>
+        let html = `<div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold flex items-center gap-2"><i class="ph ph-shopping-cart text-slate-500"></i> ${t('purchases')}</h2><button onclick="closeModal()" class="bg-slate-50 p-2 rounded-lg"><i class="ph ph-x"></i></button></div>
         <div class="flex gap-2 mb-4"><input id="pur-desc" type="text" placeholder="Supplier / Items" class="flex-1 p-2 border rounded-lg text-sm"><input id="pur-amt" type="number" placeholder="Amount (Ks)" class="w-32 p-2 border rounded-lg text-sm"><button id="add-pur" class="bg-brand-600 text-white px-4 py-2 rounded-lg font-bold text-sm">Add</button></div>
-        <div class="space-y-2">`;
-        snap.forEach(d => { const s = d.data(); html += `<div class="bg-white p-3 rounded-lg border flex justify-between items-center text-sm"><div><b>${s.desc}</b><br><span class="text-xs text-slate-500">${s.date?.toDate().toLocaleString()}</span></div><b class="text-brand-600">${s.amount.toLocaleString()} Ks</b></div>`; });
+        <div class="space-y-2 max-h-[50vh] overflow-y-auto pr-2">`;
+        snap.forEach(d => { const s = d.data(); html += `<div class="bg-white p-3 rounded-lg border flex justify-between items-center text-sm shadow-sm"><div><b class="text-slate-800">${s.desc}</b><br><span class="text-xs text-slate-500">${s.date?.toDate().toLocaleString()}</span></div><b class="text-brand-600">${s.amount.toLocaleString()} Ks</b></div>`; });
         openModal(html + '</div>');
         document.getElementById('add-pur').onclick = async () => {
             const desc = document.getElementById('pur-desc').value.trim(), amt = parseFloat(document.getElementById('pur-amt').value);
@@ -569,12 +602,12 @@
 
     // 3. EXPENSES 
     const showExpensesModal = async () => {
-        openModal(`<div class="text-center p-10">Loading...</div>`);
+        openModal(`<div class="text-center p-10 font-bold text-slate-500">Loading...</div>`);
         const snap = await getDocs(query(collection(db, "shops", shop_id, "expenses"), orderBy("date", "desc")));
-        let html = `<div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold"><i class="ph ph-money"></i> ${t('expenses')}</h2><button onclick="closeModal()"><i class="ph ph-x"></i></button></div>
+        let html = `<div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold flex items-center gap-2"><i class="ph ph-money text-slate-500"></i> ${t('expenses')}</h2><button onclick="closeModal()" class="bg-slate-50 p-2 rounded-lg"><i class="ph ph-x"></i></button></div>
         <div class="flex gap-2 mb-4"><input id="exp-desc" type="text" placeholder="Expense Description" class="flex-1 p-2 border rounded-lg text-sm"><input id="exp-amt" type="number" placeholder="Amount (Ks)" class="w-32 p-2 border rounded-lg text-sm"><button id="add-exp" class="bg-brand-600 text-white px-4 py-2 rounded-lg font-bold text-sm">Add</button></div>
-        <div class="space-y-2">`;
-        snap.forEach(d => { const s = d.data(); html += `<div class="bg-white p-3 rounded-lg border flex justify-between items-center text-sm"><div><b>${s.desc}</b><br><span class="text-xs text-slate-500">${s.date?.toDate().toLocaleString()}</span></div><b class="text-red-500">-${s.amount.toLocaleString()} Ks</b></div>`; });
+        <div class="space-y-2 max-h-[50vh] overflow-y-auto pr-2">`;
+        snap.forEach(d => { const s = d.data(); html += `<div class="bg-white p-3 rounded-lg border flex justify-between items-center text-sm shadow-sm"><div><b class="text-slate-800">${s.desc}</b><br><span class="text-xs text-slate-500">${s.date?.toDate().toLocaleString()}</span></div><b class="text-red-500">-${s.amount.toLocaleString()} Ks</b></div>`; });
         openModal(html + '</div>');
         document.getElementById('add-exp').onclick = async () => {
             const desc = document.getElementById('exp-desc').value.trim(), amt = parseFloat(document.getElementById('exp-amt').value);
@@ -585,12 +618,12 @@
 
     // 4. PAYROLL 
     const showPayrollModal = async () => {
-        openModal(`<div class="text-center p-10">Loading...</div>`);
+        openModal(`<div class="text-center p-10 font-bold text-slate-500">Loading...</div>`);
         const snap = await getDocs(query(collection(db, "shops", shop_id, "payroll"), orderBy("date", "desc")));
-        let html = `<div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold"><i class="ph ph-users-three"></i> ${t('payroll')}</h2><button onclick="closeModal()"><i class="ph ph-x"></i></button></div>
+        let html = `<div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold flex items-center gap-2"><i class="ph ph-users-three text-slate-500"></i> ${t('payroll')}</h2><button onclick="closeModal()" class="bg-slate-50 p-2 rounded-lg"><i class="ph ph-x"></i></button></div>
         <div class="flex gap-2 mb-4"><input id="pay-name" type="text" placeholder="Staff Name / Month" class="flex-1 p-2 border rounded-lg text-sm"><input id="pay-amt" type="number" placeholder="Amount (Ks)" class="w-32 p-2 border rounded-lg text-sm"><button id="add-pay" class="bg-brand-600 text-white px-4 py-2 rounded-lg font-bold text-sm">Pay</button></div>
-        <div class="space-y-2">`;
-        snap.forEach(d => { const s = d.data(); html += `<div class="bg-white p-3 rounded-lg border flex justify-between items-center text-sm"><div><b>${s.name}</b><br><span class="text-xs text-slate-500">${s.date?.toDate().toLocaleString()}</span></div><b class="text-red-500">-${s.amount.toLocaleString()} Ks</b></div>`; });
+        <div class="space-y-2 max-h-[50vh] overflow-y-auto pr-2">`;
+        snap.forEach(d => { const s = d.data(); html += `<div class="bg-white p-3 rounded-lg border flex justify-between items-center text-sm shadow-sm"><div><b class="text-slate-800">${s.name}</b><br><span class="text-xs text-slate-500">${s.date?.toDate().toLocaleString()}</span></div><b class="text-red-500">-${s.amount.toLocaleString()} Ks</b></div>`; });
         openModal(html + '</div>');
         document.getElementById('add-pay').onclick = async () => {
             const name = document.getElementById('pay-name').value.trim(), amt = parseFloat(document.getElementById('pay-amt').value);
@@ -602,22 +635,22 @@
     // 5. CUSTOMERS & DEBTS
     const showCustomersModal = () => {
         openModal(`
-            <div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold"><i class="ph ph-users"></i> ${t('customers')} & Debts</h2><button onclick="closeModal()"><i class="ph ph-x"></i></button></div>
-            <button onclick="renderAddCustomerForm()" class="w-full bg-slate-50 border border-dashed hover:border-brand-500 py-3 rounded-xl mb-4 text-sm font-bold">+ Add Client</button>
+            <div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold flex items-center gap-2"><i class="ph ph-users text-slate-500"></i> ${t('customers')} & Debts</h2><button onclick="closeModal()" class="bg-slate-50 p-2 rounded-lg"><i class="ph ph-x"></i></button></div>
+            <button onclick="renderAddCustomerForm()" class="w-full bg-slate-50 border border-dashed hover:border-brand-500 py-3 rounded-xl mb-4 text-sm font-bold text-slate-600">+ Add Client</button>
             <div id="customer-list" class="space-y-2 max-h-[50vh] overflow-y-auto pr-2"></div>
         `);
         onSnapshot(collection(db, "shops", shop_id, "customers"), (snap) => {
             const list = document.getElementById('customer-list'); if (!list) return; list.innerHTML = '';
             snap.forEach(d => {
                 const c = d.data();
-                list.innerHTML += `<div class="bg-white p-3 rounded-xl border flex justify-between items-center text-sm"><div><b>${c.name}</b><br><span class="text-xs text-slate-500">${c.phone||''} | Points: ${c.points||0}</span></div><div class="flex items-center gap-2"><span class="font-bold ${c.debt>0?'text-red-500':'text-green-600'}">${c.debt ? 'Debt: '+c.debt.toLocaleString()+' Ks' : 'Clear'}</span><button onclick="clearDebt('${d.id}')" class="text-xs bg-slate-100 px-2 py-1 rounded">Pay Debt</button><button onclick="deleteCustomer('${d.id}')" class="text-slate-400 hover:text-red-500 p-1"><i class="ph ph-trash"></i></button></div></div>`;
+                list.innerHTML += `<div class="bg-white p-3 rounded-xl border flex justify-between items-center text-sm shadow-sm"><div><b class="text-slate-800">${c.name}</b><br><span class="text-xs text-slate-500">${c.phone||''} | Points: ${c.points||0}</span></div><div class="flex items-center gap-2"><span class="font-bold ${c.debt>0?'text-red-500':'text-emerald-600'}">${c.debt ? 'Debt: '+c.debt.toLocaleString()+' Ks' : 'Clear'}</span><button onclick="clearDebt('${d.id}')" class="text-xs bg-slate-100 font-bold px-2 py-1.5 rounded-lg hover:bg-slate-200">Pay Debt</button><button onclick="deleteCustomer('${d.id}')" class="text-slate-400 hover:text-red-500 p-1"><i class="ph ph-trash text-lg"></i></button></div></div>`;
             });
         });
     };
     window.renderAddCustomerForm = () => {
         openModal(`
-            <div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold">New Client</h2><button onclick="showCustomersModal()" class="text-xs bg-slate-100 px-3 py-1 rounded">Back</button></div>
-            <div class="space-y-3"><input id="new-c-name" type="text" placeholder="Name *" class="w-full p-3 border rounded-xl text-sm"><input id="new-c-phone" type="text" placeholder="Phone" class="w-full p-3 border rounded-xl text-sm"><button id="save-cust-btn" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-sm">Save</button></div>
+            <div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold">New Client</h2><button onclick="showCustomersModal()" class="text-xs font-bold bg-slate-100 px-3 py-1.5 rounded-lg">Back</button></div>
+            <div class="space-y-3"><input id="new-c-name" type="text" placeholder="Name *" class="w-full p-3 border rounded-xl text-sm"><input id="new-c-phone" type="text" placeholder="Phone" class="w-full p-3 border rounded-xl text-sm"><button id="save-cust-btn" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-sm">Save Client</button></div>
         `);
         document.getElementById('save-cust-btn').onclick = async () => { const n = document.getElementById('new-c-name').value.trim(), p = document.getElementById('new-c-phone').value.trim(); if(!n) return; await addDoc(collection(db, "shops", shop_id, "customers"), { name:n, phone:p, points:0, debt:0 }); showCustomersModal(); };
     };
@@ -626,18 +659,109 @@
     linkButtons('btn-customers', 'btn-customers-m', showCustomersModal);
     linkButtons('btn-debts', 'btn-debts-m', showCustomersModal);
 
-    // 6. HISTORY
+    // 6. HISTORY + EDIT SALE
     const showHistoryModal = async () => {
-        openModal(`<div class="text-center p-10">Loading...</div>`);
+        openModal(`<div class="text-center p-10 font-bold text-slate-500">Loading...</div>`);
         const snap = await getDocs(query(collection(db, "shops", shop_id, "sales"), orderBy("createdAt", "desc"), limit(50)));
-        let html = `<div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold"><i class="ph ph-receipt"></i> ${t('history')}</h2><button onclick="closeModal()"><i class="ph ph-x"></i></button></div><div class="space-y-2">`;
-        snap.forEach(d => { const s = d.data(); html += `<div class="bg-white p-3 rounded-xl border flex justify-between items-center text-sm"><div><b>${s.createdAt?s.createdAt.toDate().toLocaleString():''}</b><br><span class="text-xs text-slate-500">${s.items?s.items.map(i=>i.name).join(', '):''}</span></div><div class="text-right"><b>${s.total.toLocaleString()} Ks</b><br><span class="text-[10px] uppercase">${s.paymentMethod}</span></div></div>`; });
+        let html = `<div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold flex items-center gap-2"><i class="ph ph-receipt text-slate-500"></i> ${t('history')}</h2><button onclick="closeModal()" class="bg-slate-50 p-2 rounded-lg"><i class="ph ph-x"></i></button></div><div class="space-y-2 max-h-[60vh] overflow-y-auto pr-2">`;
+        snap.forEach(d => { 
+            const s = d.data(); 
+            const cName = s.customerName || s.customerType || 'Walk-in';
+            html += `
+            <div class="bg-white p-4 rounded-xl border flex justify-between items-center text-sm shadow-sm">
+                <div>
+                    <b class="text-slate-800">${s.createdAt?s.createdAt.toDate().toLocaleString():''}</b> 
+                    <span class="bg-slate-100 text-[10px] px-2 py-0.5 rounded-full ml-2 font-bold">${cName}</span><br>
+                    <span class="text-xs font-medium text-slate-500 mt-1 block line-clamp-1 max-w-[200px]">${s.items?s.items.map(i=>i.name).join(', '):''}</span>
+                </div>
+                <div class="text-right flex items-center gap-2 sm:gap-4">
+                    <div>
+                        <b class="text-brand-600 text-base">${s.total.toLocaleString()} Ks</b><br>
+                        <span class="text-[10px] font-bold uppercase text-slate-400">${s.paymentMethod}</span>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-1">
+                        <button onclick="editTransaction('${d.id}')" class="bg-blue-50 p-2 rounded-lg text-blue-600 hover:text-blue-700 hover:bg-blue-100 transition"><i class="ph ph-pencil-simple text-lg"></i></button>
+                        <button onclick='reprintReceipt(${JSON.stringify({items: s.items, total: s.total, paymentMethod: s.paymentMethod, customer: cName, date: s.createdAt?s.createdAt.toDate().toLocaleString():''})})' class="bg-slate-100 p-2 rounded-lg text-slate-600 hover:text-brand-600 transition"><i class="ph ph-printer text-lg"></i></button>
+                    </div>
+                </div>
+            </div>`; 
+        });
         openModal(html + `</div>`);
-    }; linkButtons('btn-history', 'btn-history-m', showHistoryModal);
+    }; 
+    window.reprintReceipt = (data) => { printReceipt(data); };
+    linkButtons('btn-history', 'btn-history-m', showHistoryModal);
+
+    window.editTransaction = async (id) => {
+        openModal(`<div class="text-center p-10 font-bold text-slate-500">Loading Transaction...</div>`);
+        const docRef = doc(db, "shops", shop_id, "sales", id);
+        const sDoc = await getDoc(docRef);
+        if(!sDoc.exists()) return alert("Transaction not found.");
+        const s = sDoc.data();
+        
+        openModal(`
+            <div class="flex justify-between items-center mb-6 border-b pb-4">
+                <h2 class="text-xl font-bold flex items-center gap-2"><i class="ph ph-pencil-simple text-blue-500"></i> Edit Transaction</h2>
+                <button onclick="showHistoryModal()" class="bg-slate-50 p-2 rounded-lg"><i class="ph ph-x"></i></button>
+            </div>
+            <div class="space-y-4 bg-slate-50 p-5 rounded-2xl border">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Payment Method</label>
+                    <select id="edit-pay" class="w-full p-3 border rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="Cash" ${s.paymentMethod==='Cash'?'selected':''}>Cash</option>
+                        <option value="Card" ${s.paymentMethod==='Card'?'selected':''}>Card</option>
+                        <option value="KPay" ${s.paymentMethod==='KPay'?'selected':''}>KPay</option>
+                        <option value="WavePay" ${s.paymentMethod==='WavePay'?'selected':''}>WavePay</option>
+                        <option value="AYA Pay" ${s.paymentMethod==='AYA Pay'?'selected':''}>AYA PAY</option>
+                        <option value="Credit" ${s.paymentMethod==='Credit'?'selected':''}>Credit (အကြွေး)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Customer Type</label>
+                    <select id="edit-cust" class="w-full p-3 border rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="Walk-in" ${s.customerType==='Walk-in'?'selected':''}>Walk-in Customer</option>
+                        <option value="Phone Order" ${s.customerType==='Phone Order'?'selected':''}>Phone Order</option>
+                        <option value="Online" ${s.customerType==='Online'?'selected':''}>Online Customer</option>
+                    </select>
+                </div>
+                <div class="pt-4 flex justify-between items-center">
+                    <button id="del-trans-btn" class="text-red-500 font-bold text-sm bg-red-50 px-4 py-3 rounded-xl hover:bg-red-100 transition">Delete Sale</button>
+                    <button id="save-trans-btn" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-blue-700 transition">Save Changes</button>
+                </div>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-4 text-center">Note: Modifying items is not supported here. To edit items, delete this sale and create a new one.</p>
+        `);
+
+        document.getElementById('save-trans-btn').onclick = async () => {
+            const newPay = document.getElementById('edit-pay').value;
+            const newCust = document.getElementById('edit-cust').value;
+            try {
+                await updateDoc(docRef, { paymentMethod: newPay, customerType: newCust, customerName: newCust });
+                alert("Transaction Updated Successfully!");
+                showHistoryModal();
+            } catch(e) { alert(e.message); }
+        };
+
+        document.getElementById('del-trans-btn').onclick = async () => {
+            if(confirm("Are you sure you want to permanently delete this sale? The sold items will be returned to inventory.")) {
+                try {
+                    const batch = writeBatch(db);
+                    if(s.items) {
+                        s.items.forEach(item => { 
+                            if(item.productId) { batch.update(doc(db, "shops", shop_id, "products", item.productId), { quantity: increment(item.qty || 1) }); }
+                        });
+                    }
+                    batch.delete(docRef);
+                    await batch.commit();
+                    alert("Sale Deleted & Inventory Reverted.");
+                    showHistoryModal();
+                } catch(e) { alert(e.message); }
+            }
+        };
+    };
 
     // 7. REPORTS (PROFIT & LOSS)
     const showReportsModal = async () => {
-        openModal(`<div class="text-center p-10">Calculating ERP Data...</div>`);
+        openModal(`<div class="text-center p-10 font-bold text-slate-500">Calculating ERP Data...</div>`);
         const tObj = new Date(); tObj.setHours(0,0,0,0); const today = tObj.getTime();
         
         const [salesS, expS, payS, purS] = await Promise.all([
@@ -660,7 +784,7 @@
         allProducts.forEach(p => { invCostVal += (p.costPrice||0)*p.quantity; invRetVal += (p.retailPrice||p.price||0)*p.quantity; });
 
         openModal(`
-            <div class="flex justify-between items-center mb-4 border-b pb-4"><h2 class="text-xl font-bold"><i class="ph ph-chart-bar"></i> Master P&L Reports</h2><button onclick="closeModal()"><i class="ph ph-x"></i></button></div>
+            <div class="flex justify-between items-center mb-4 border-b pb-4"><h2 class="text-xl font-bold flex items-center gap-2"><i class="ph ph-chart-bar text-slate-500"></i> Master P&L Reports</h2><button onclick="closeModal()" class="bg-slate-50 p-2 rounded-lg"><i class="ph ph-x"></i></button></div>
             
             <div class="grid grid-cols-2 gap-3 mb-4">
                 <div class="bg-white border p-4 rounded-xl shadow-sm"><div class="text-[10px] font-bold text-slate-400 uppercase">Today Revenue</div><div class="text-xl font-black text-brand-600">${todayRev.toLocaleString()} Ks</div></div>
@@ -669,29 +793,29 @@
 
             <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 border-b pb-1">Profit & Loss (P&L)</h3>
             <div class="bg-white rounded-xl border p-4 text-sm mb-4 space-y-2 shadow-sm">
-                <div class="flex justify-between"><span>Total Revenue (Sales)</span><b>${totalRev.toLocaleString()}</b></div>
-                <div class="flex justify-between text-slate-500"><span>- Cost of Goods Sold</span><span>-${totalCOG.toLocaleString()}</span></div>
-                <div class="flex justify-between border-t border-b py-1"><span><b>Gross Profit</b> (အကြမ်းအမြတ်)</span><b class="text-blue-600">${grossProfit.toLocaleString()}</b></div>
-                <div class="flex justify-between text-red-500"><span>- Total Expenses</span><span>-${totalExp.toLocaleString()}</span></div>
-                <div class="flex justify-between text-red-500"><span>- Payroll</span><span>-${totalPay.toLocaleString()}</span></div>
-                <div class="flex justify-between border-t pt-1"><span class="text-base"><b>Net Profit</b> (အသားတင်အမြတ်)</span><b class="text-lg ${netProfit<0?'text-red-600':'text-emerald-600'}">${netProfit.toLocaleString()} Ks</b></div>
+                <div class="flex justify-between"><span class="text-slate-600 font-medium">Total Revenue (Sales)</span><b class="text-slate-800">${totalRev.toLocaleString()}</b></div>
+                <div class="flex justify-between text-slate-500"><span class="font-medium">- Cost of Goods Sold</span><span>-${totalCOG.toLocaleString()}</span></div>
+                <div class="flex justify-between border-t border-b py-2 my-1"><span class="font-medium"><b>Gross Profit</b> (အကြမ်းအမြတ်)</span><b class="text-blue-600 text-base">${grossProfit.toLocaleString()}</b></div>
+                <div class="flex justify-between text-red-500"><span class="font-medium">- Total Expenses</span><span>-${totalExp.toLocaleString()}</span></div>
+                <div class="flex justify-between text-red-500"><span class="font-medium">- Payroll</span><span>-${totalPay.toLocaleString()}</span></div>
+                <div class="flex justify-between border-t pt-2 mt-1"><span class="text-base font-medium"><b>Net Profit</b> (အသားတင်အမြတ်)</span><b class="text-lg ${netProfit<0?'text-red-600':'text-emerald-600'}">${netProfit.toLocaleString()} Ks</b></div>
             </div>
 
             <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 border-b pb-1">Inventory Valuation</h3>
             <div class="bg-white rounded-xl border p-4 text-sm mb-4 shadow-sm flex justify-between">
-                <div><span class="text-slate-500 text-xs block">Cost Value (အရင်း)</span><b>${invCostVal.toLocaleString()} Ks</b></div>
-                <div class="text-right"><span class="text-slate-500 text-xs block">Retail Value (ရောင်းစျေး)</span><b>${invRetVal.toLocaleString()} Ks</b></div>
+                <div><span class="text-slate-500 text-xs block font-medium">Cost Value (အရင်း)</span><b class="text-slate-800 text-base">${invCostVal.toLocaleString()} Ks</b></div>
+                <div class="text-right"><span class="text-slate-500 text-xs block font-medium">Retail Value (ရောင်းစျေး)</span><b class="text-slate-800 text-base">${invRetVal.toLocaleString()} Ks</b></div>
             </div>
             
-            <div class="bg-slate-100 p-3 rounded-lg text-xs text-center text-slate-500">Total Purchases to Suppliers: ${totalPur.toLocaleString()} Ks</div>
+            <div class="bg-slate-100 p-3 rounded-lg text-xs font-bold text-center text-slate-500">Total Purchases to Suppliers: ${totalPur.toLocaleString()} Ks</div>
         `);
     }; linkButtons('btn-reports', 'btn-reports-m', showReportsModal);
 
     // 8. SHIFT
     const showShiftModal = () => {
         openModal(`
-            <div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold"><i class="ph ph-clock"></i> ${t('shifts')}</h2><button onclick="closeModal()"><i class="ph ph-x"></i></button></div>
-            <div class="flex gap-4 mb-4"><button id="clock-in" class="flex-1 bg-white border hover:border-brand-500 py-3 rounded-xl font-bold text-sm">Clock In</button><button id="clock-out" class="flex-1 bg-white border hover:border-red-500 py-3 rounded-xl font-bold text-sm">Clock Out</button></div>
+            <div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold flex items-center gap-2"><i class="ph ph-clock text-slate-500"></i> ${t('shifts')}</h2><button onclick="closeModal()" class="bg-slate-50 p-2 rounded-lg"><i class="ph ph-x"></i></button></div>
+            <div class="flex gap-4 mb-4"><button id="clock-in" class="flex-1 bg-white border shadow-sm hover:border-brand-500 py-3 rounded-xl font-bold text-sm">Clock In</button><button id="clock-out" class="flex-1 bg-white border shadow-sm hover:border-red-500 py-3 rounded-xl font-bold text-sm">Clock Out</button></div>
             <div id="shift-log" class="space-y-2 max-h-[40vh] overflow-y-auto pr-2"></div>
         `);
         document.getElementById('clock-in').onclick = () => { if(auth.currentUser) addDoc(collection(db, "shops", shop_id, "shifts"), { userId: auth.currentUser.uid, type: 'in', time: serverTimestamp() }); };
@@ -705,7 +829,7 @@
     // 9. SETTINGS
     const showSettingsModal = () => {
         openModal(`
-            <div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold"><i class="ph ph-gear"></i> ${t('settings')}</h2><button onclick="closeModal()"><i class="ph ph-x"></i></button></div>
+            <div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold flex items-center gap-2"><i class="ph ph-gear text-slate-500"></i> ${t('settings')}</h2><button onclick="closeModal()" class="bg-slate-50 p-2 rounded-lg"><i class="ph ph-x"></i></button></div>
             <div class="space-y-3 bg-slate-50 p-4 rounded-2xl border">
                 <div><label class="block text-xs font-bold text-slate-500 mb-1">Store Name</label><input id="set-name" type="text" value="${shop_settings.shopName || shop_name}" class="w-full p-3 border rounded-xl text-sm font-bold"></div>
                 <div><label class="block text-xs font-bold text-slate-500 mb-1">Phone Number</label><input id="set-phone" type="text" value="${shop_settings.phone || ''}" class="w-full p-3 border rounded-xl text-sm"></div>
@@ -714,7 +838,6 @@
                 <div><label class="block text-xs font-bold text-slate-500 mb-1">Logo URL (Optional)</label><input id="set-logo" type="text" value="${shop_settings.logo || ''}" placeholder="https://..." class="w-full p-3 border rounded-xl text-sm"></div>
                 <div class="pt-2"><button id="save-set-btn" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-sm">Save Settings</button></div>
             </div>
-            <p class="text-xs text-slate-400 mt-4 text-center">Note: Printing uses standard browser printing. Works with Bluetooth/Thermal printers via standard setup.</p>
         `);
         document.getElementById('save-set-btn').onclick = async () => {
             const n = document.getElementById('set-name').value.trim(), f = document.getElementById('set-foot').value.trim(), p = document.getElementById('set-phone').value.trim(), a = document.getElementById('set-add').value.trim(), l = document.getElementById('set-logo').value.trim();
