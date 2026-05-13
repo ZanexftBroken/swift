@@ -120,15 +120,15 @@
         <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-white shrink-0">
             <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2"><i class="ph ph-shopping-bag text-brand-600"></i> <span data-i18n="order">Current Order</span></h2>
             <div class="flex items-center gap-2">
-                <button onclick="holdOrder()" title="Hold Order" class="p-1.5 text-orange-500 bg-orange-50 hover:bg-orange-100 rounded-lg"><i class="ph ph-pause-circle text-lg"></i></button>
-                <button onclick="viewHeldOrders()" title="View Held Orders" class="p-1.5 text-blue-500 bg-blue-50 hover:bg-blue-100 rounded-lg relative"><i class="ph ph-list-dashes text-lg"></i><span id="held-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-bold px-1.5 rounded-full hidden">0</span></button>
-                <button onclick="clearCart()" class="text-xs font-semibold text-red-600 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg" data-i18n="clear">Clear</button>
+                <button onclick="holdOrder()" title="Hold Order" class="p-1.5 text-orange-500 bg-orange-50 hover:bg-orange-100 rounded-lg transition-colors"><i class="ph ph-pause-circle text-lg"></i></button>
+                <button onclick="viewHeldOrders()" title="View Held Orders" class="p-1.5 text-blue-500 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors relative"><i class="ph ph-list-dashes text-lg"></i><span id="held-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-bold px-1.5 rounded-full hidden">0</span></button>
+                <button onclick="clearCart()" class="text-xs font-semibold text-red-600 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg transition-colors" data-i18n="clear">Clear</button>
                 <button onclick="toggleMobileCart()" class="lg:hidden p-1.5 text-slate-400 bg-slate-100 rounded-lg"><i class="ph ph-x text-lg"></i></button>
             </div>
         </div>
 
         <div class="p-3 border-b border-slate-100 bg-slate-50/50 shrink-0">
-            <div class="flex items-center gap-2 bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm"><i class="ph ph-user text-slate-400"></i>
+            <div class="flex items-center gap-2 bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm focus-within:border-brand-500 transition"><i class="ph ph-user text-slate-400"></i>
                 <select id="customer-select" class="w-full bg-transparent border-none outline-none text-sm font-semibold text-slate-700 cursor-pointer appearance-none"><option value="" data-i18n="walkin">Walk-in Customer</option></select>
                 <i class="ph ph-caret-down text-slate-400 text-xs"></i>
             </div>
@@ -142,10 +142,10 @@
 
         <div class="p-4 bg-white border-t border-slate-200 shadow-[0_-4px_10px_rgba(0,0,0,0.02)] shrink-0">
             <div class="flex gap-3 mb-3">
-                <div class="flex-1 bg-white border border-slate-200 rounded-xl p-2 flex items-center justify-between shadow-sm"><span data-i18n="disc" class="text-[10px] font-bold text-slate-400 uppercase ml-1">Disc%</span><input id="discount" type="number" value="0" class="w-14 text-right border-none outline-none text-sm font-bold text-slate-900 bg-transparent"></div>
-                <div class="flex-1 bg-white border border-slate-200 rounded-xl p-2 flex items-center justify-between shadow-sm"><span data-i18n="tax" class="text-[10px] font-bold text-slate-400 uppercase ml-1">Tax%</span><input id="tax" type="number" value="0" class="w-14 text-right border-none outline-none text-sm font-bold text-slate-900 bg-transparent"></div>
+                <div class="flex-1 bg-white border border-slate-200 rounded-xl p-2 flex items-center justify-between shadow-sm focus-within:border-brand-500 transition"><span data-i18n="disc" class="text-[10px] font-bold text-slate-400 uppercase ml-1">Disc%</span><input id="discount" type="number" value="0" class="w-14 text-right border-none outline-none text-sm font-bold text-slate-900 bg-transparent"></div>
+                <div class="flex-1 bg-white border border-slate-200 rounded-xl p-2 flex items-center justify-between shadow-sm focus-within:border-brand-500 transition"><span data-i18n="tax" class="text-[10px] font-bold text-slate-400 uppercase ml-1">Tax%</span><input id="tax" type="number" value="0" class="w-14 text-right border-none outline-none text-sm font-bold text-slate-900 bg-transparent"></div>
             </div>
-            <div class="mb-4 bg-white border border-slate-200 rounded-xl p-2.5 flex items-center shadow-sm"><div class="bg-indigo-50 p-1.5 rounded-lg ml-1 mr-2"><i class="ph ph-wallet text-brand-600"></i></div>
+            <div class="mb-4 bg-white border border-slate-200 rounded-xl p-2.5 flex items-center shadow-sm focus-within:border-brand-500 transition"><div class="bg-indigo-50 p-1.5 rounded-lg ml-1 mr-2"><i class="ph ph-wallet text-brand-600"></i></div>
                 <select id="payment-method" class="w-full bg-transparent border-none outline-none text-sm font-semibold text-slate-700 appearance-none cursor-pointer"><option value="Cash">Cash</option><option value="Card">Card</option><option value="KPay">KPay</option><option value="WavePay">WavePay</option><option value="Credit">Credit (အကြွေး)</option></select>
                 <i class="ph ph-caret-down text-slate-400 text-xs pr-2"></i>
             </div>
@@ -238,7 +238,7 @@
         else { m.classList.add('-translate-x-full'); o.classList.add('opacity-0'); setTimeout(()=>o.classList.add('hidden'),300); }
     };
 
-    // ---- AUTO LOGIN (SAVE LOGIN) SYSTEM ----
+    // AUTO LOGIN
     onAuthStateChanged(auth, async (user) => {
         if (user) {
             try {
@@ -246,50 +246,38 @@
                 if (userDoc.exists()) {
                     const data = userDoc.data(); 
                     if (new Date() > new Date(data.expiryDate)) { signOut(auth); return; }
-                    
                     shop_id = data.shopId; shop_name = data.shopName; userRole = data.role || 'staff'; 
                     updateText('s-name', shop_name);
-                    
                     document.getElementById('pos-login').style.display = 'none'; 
-                    const mainApp = document.getElementById('pos-main'); 
-                    mainApp.classList.remove('hidden'); 
-                    mainApp.style.display = 'flex';
-                    
+                    const mainApp = document.getElementById('pos-main'); mainApp.classList.remove('hidden'); mainApp.style.display = 'flex';
                     loadProducts(); loadSettings();
                 }
-            } catch (e) { console.error("Auto login check failed:", e); }
+            } catch (e) { console.error(e); }
         }
     });
 
-    // Check Master Login from LocalStorage
     if (localStorage.getItem('master_logged_in') === 'true') {
-        shop_id = 'master_shop'; shop_name = 'SWIFT POS'; userRole = 'owner'; 
-        updateText('s-name', shop_name);
+        shop_id = 'master_shop'; shop_name = 'SWIFT POS'; userRole = 'owner'; updateText('s-name', shop_name);
         document.getElementById('pos-login').style.display = 'none'; 
-        const mainApp = document.getElementById('pos-main'); 
-        mainApp.classList.remove('hidden'); 
-        mainApp.style.display = 'flex';
+        const mainApp = document.getElementById('pos-main'); mainApp.classList.remove('hidden'); mainApp.style.display = 'flex';
         loadProducts(); loadSettings();
     }
 
-    // ---- MANUAL LOGIN ----
+    // LOGIN
     document.getElementById('l-btn').onclick = async () => {
         const u = document.getElementById('u').value.trim(); const p = document.getElementById('p').value; const err = document.getElementById('l-err'); if(err) err.classList.add('hidden');
-        
         if (u === 'master' && p === 'master123') {
-            localStorage.setItem('master_logged_in', 'true'); // Save Master Login
+            localStorage.setItem('master_logged_in', 'true');
             shop_id = 'master_shop'; shop_name = 'SWIFT POS'; userRole = 'owner'; updateText('s-name', shop_name);
             document.getElementById('pos-login').style.display = 'none'; document.getElementById('pos-main').classList.remove('hidden'); document.getElementById('pos-main').style.display = 'flex';
             loadProducts(); loadSettings(); return;
         }
-        
         try {
             document.getElementById('l-btn').innerText = "Authenticating...";
             const cred = await signInWithEmailAndPassword(auth, `${u}@pos.local`, p);
             const userDoc = await getDoc(doc(db, "users", cred.user.uid));
             if (userDoc.exists()) {
                 const data = userDoc.data(); if (new Date() > new Date(data.expiryDate)) { signOut(auth); throw new Error("Subscription Expired!"); }
-                
                 shop_id = data.shopId; shop_name = data.shopName; userRole = data.role || 'staff'; updateText('s-name', shop_name);
                 document.getElementById('pos-login').style.display = 'none'; document.getElementById('pos-main').classList.remove('hidden'); document.getElementById('pos-main').style.display = 'flex';
                 loadProducts(); loadSettings();
@@ -297,12 +285,7 @@
         } catch (e) { if(err){ err.innerText = e.message; err.classList.remove('hidden'); } document.getElementById('l-btn').innerText = "Sign In"; }
     };
     
-    // ---- LOGOUT ----
-    const handleLogout = () => { 
-        localStorage.removeItem('master_logged_in'); // Clear saved master session
-        signOut(auth); 
-        location.reload(); 
-    };
+    const handleLogout = () => { localStorage.removeItem('master_logged_in'); signOut(auth); location.reload(); };
     document.getElementById('lo-btn').onclick = handleLogout; document.getElementById('lo-btn-m').onclick = handleLogout;
 
     // SETTINGS
@@ -493,7 +476,7 @@
 
     // ---- ERP MODALS ----
 
-    // 1. INVENTORY
+    // 1. INVENTORY + EDIT 
     const showItemsModal = () => {
         openModal(`
             <div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4"><h2 class="text-xl font-bold"><i class="ph ph-package"></i> ${t('inventory')}</h2><button onclick="closeModal()"><i class="ph ph-x"></i></button></div>
@@ -520,7 +503,7 @@
         `);
         const invList = document.getElementById('inv-list');
         allProducts.forEach(p => {
-            invList.innerHTML += `<div class="bg-white p-3 rounded-xl border flex justify-between items-center text-sm"><div><b>${p.name}</b> ${p.variant?`(${p.variant})`:''} <span class="bg-slate-100 px-1 rounded text-xs">${p.category||''}</span><br><span class="text-xs text-slate-500">Retail: ${p.retailPrice||p.price||0} | Cost: ${p.costPrice||0} | Stock: <b class="${p.quantity<=5?'text-red-500':'text-green-600'}">${p.quantity} ${p.unit||''}</b> ${p.expiryDate ? '| EXP: '+p.expiryDate : ''}</span></div><button onclick="deleteProduct('${p.id}')" class="text-red-500"><i class="ph ph-trash"></i></button></div>`;
+            invList.innerHTML += `<div class="bg-white p-3 rounded-xl border flex justify-between items-center text-sm"><div><b>${p.name}</b> ${p.variant?`(${p.variant})`:''} <span class="bg-slate-100 px-1 rounded text-xs">${p.category||''}</span><br><span class="text-xs text-slate-500">Retail: ${p.retailPrice||p.price||0} | Cost: ${p.costPrice||0} | Stock: <b class="${p.quantity<=5?'text-red-500':'text-green-600'}">${p.quantity} ${p.unit||''}</b> ${p.expiryDate ? '| EXP: '+p.expiryDate : ''}</span></div><div class="flex gap-2"><button onclick="editProduct('${p.id}')" class="text-blue-500 bg-slate-50 p-2 rounded-lg"><i class="ph ph-pencil-simple"></i></button><button onclick="deleteProduct('${p.id}')" class="text-red-500 bg-slate-50 p-2 rounded-lg"><i class="ph ph-trash"></i></button></div></div>`;
         });
         document.getElementById('save-item-btn').onclick = async () => {
             const name = document.getElementById('p-name').value.trim(), category = document.getElementById('p-cat').value.trim(), retailPrice = parseFloat(document.getElementById('p-retail').value), qty = parseInt(document.getElementById('p-qty').value);
@@ -529,6 +512,42 @@
             try { await addDoc(collection(db, "shops", shop_id, "products"), data); showItemsModal(); } catch (err) { alert(err.message); }
         };
     };
+
+    window.editProduct = (id) => {
+        const p = allProducts.find(x => x.id === id); if(!p) return;
+        openModal(`
+            <div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold"><i class="ph ph-pencil-simple"></i> Edit Product</h2><button onclick="showItemsModal()"><i class="ph ph-x"></i></button></div>
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+                    <div class="col-span-2"><label class="text-xs font-bold text-slate-500 uppercase">Item Name *</label><input id="e-name" type="text" value="${p.name}" class="w-full p-2 border rounded-lg text-sm"></div>
+                    <div><label class="text-xs font-bold text-slate-500 uppercase">Category</label><input id="e-cat" type="text" list="cat-list" value="${p.category||''}" class="w-full p-2 border rounded-lg text-sm"></div>
+                    <div><label class="text-xs font-bold text-slate-500 uppercase">SKU / Barcode</label><input id="e-sku" type="text" value="${p.sku||''}" class="w-full p-2 border rounded-lg text-sm"></div>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+                    <div><label class="text-xs font-bold text-slate-500 uppercase">Cost Price</label><input id="e-cost" type="number" value="${p.costPrice||0}" class="w-full p-2 border rounded-lg text-sm"></div>
+                    <div><label class="text-xs font-bold text-slate-500 uppercase">Wholesale</label><input id="e-whole" type="number" value="${p.wholesalePrice||p.retailPrice||p.price||0}" class="w-full p-2 border rounded-lg text-sm"></div>
+                    <div><label class="text-xs font-bold text-slate-500 uppercase">Retail Price *</label><input id="e-retail" type="number" value="${p.retailPrice||p.price||0}" class="w-full p-2 border rounded-lg text-sm"></div>
+                    <div><label class="text-xs font-bold text-slate-500 uppercase">Stock Qty *</label><input id="e-qty" type="number" value="${p.quantity||0}" class="w-full p-2 border rounded-lg text-sm"></div>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div><label class="text-xs font-bold text-slate-500 uppercase">Unit</label><input id="e-unit" type="text" value="${p.unit||''}" class="w-full p-2 border rounded-lg text-sm"></div>
+                    <div><label class="text-xs font-bold text-slate-500 uppercase">Variant</label><input id="e-var" type="text" value="${p.variant||''}" class="w-full p-2 border rounded-lg text-sm"></div>
+                    <div class="col-span-2"><label class="text-xs font-bold text-slate-500 uppercase">Expire Date</label><input id="e-exp" type="date" value="${p.expiryDate||''}" class="w-full p-2 border rounded-lg text-sm"></div>
+                </div>
+                <div class="flex justify-end mt-4 gap-2">
+                    <button onclick="showItemsModal()" class="bg-slate-200 text-slate-700 px-4 py-2.5 rounded-lg font-bold text-sm">Cancel</button>
+                    <button id="update-item-btn" class="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-bold text-sm">Update Product</button>
+                </div>
+            </div>
+        `);
+        document.getElementById('update-item-btn').onclick = async () => {
+            const name = document.getElementById('e-name').value.trim(); const category = document.getElementById('e-cat').value.trim(); const retailPrice = parseFloat(document.getElementById('e-retail').value); const qty = parseInt(document.getElementById('e-qty').value);
+            if(!name || isNaN(retailPrice) || isNaN(qty)) return alert("Fill Name, Retail Price, Qty");
+            const data = { name, category, retailPrice, costPrice: parseFloat(document.getElementById('e-cost').value)||0, wholesalePrice: parseFloat(document.getElementById('e-whole').value)||retailPrice, quantity: qty, sku: document.getElementById('e-sku').value.trim(), unit: document.getElementById('e-unit').value.trim(), variant: document.getElementById('e-var').value.trim(), expiryDate: document.getElementById('e-exp').value };
+            try { await updateDoc(doc(db, "shops", shop_id, "products", id), data); showItemsModal(); } catch (err) { alert(err.message); }
+        };
+    };
+
     window.deleteProduct = async (id) => { if(confirm('Delete?')) { await deleteDoc(doc(db, "shops", shop_id, "products", id)); showItemsModal(); } };
     linkButtons('btn-items', 'btn-items-m', showItemsModal);
 
@@ -683,7 +702,7 @@
         });
     }; linkButtons('btn-shift', 'btn-shift-m', showShiftModal);
 
-
+    // 9. SETTINGS
     const showSettingsModal = () => {
         openModal(`
             <div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold"><i class="ph ph-gear"></i> ${t('settings')}</h2><button onclick="closeModal()"><i class="ph ph-x"></i></button></div>
