@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Swift POS - Ultimate Bilingual SaaS Edition</title>
+    <title>Swift POS - Ultimate ERP System</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -39,15 +39,11 @@
             <i class="ph ph-storefront text-4xl text-brand-600"></i>
         </div>
         <h2 class="text-2xl sm:text-3xl font-black mb-2 text-slate-900 tracking-tight">Sign in to Workspace</h2>
-        <p class="text-slate-500 mb-8 text-sm font-medium">Swift POS Management System</p>
+        <p class="text-slate-500 mb-8 text-sm font-medium">Swift POS & ERP System</p>
         
         <div class="space-y-4">
-            <div class="relative">
-                <input id="u" type="text" placeholder="Username" class="w-full px-5 py-3.5 bg-white border border-slate-200 rounded-xl outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10 transition text-sm sm:text-base font-medium placeholder-slate-400">
-            </div>
-            <div class="relative">
-                <input id="p" type="password" placeholder="Password" class="w-full px-5 py-3.5 bg-white border border-slate-200 rounded-xl outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10 transition text-sm sm:text-base font-medium placeholder-slate-400">
-            </div>
+            <input id="u" type="text" placeholder="Username" class="w-full px-5 py-3.5 bg-white border border-slate-200 rounded-xl outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10 transition text-sm sm:text-base font-medium placeholder-slate-400">
+            <input id="p" type="password" placeholder="Password" class="w-full px-5 py-3.5 bg-white border border-slate-200 rounded-xl outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10 transition text-sm sm:text-base font-medium placeholder-slate-400">
             <button id="l-btn" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 rounded-xl shadow-md shadow-brand-600/20 active:scale-[0.98] transition-all text-sm sm:text-base mt-2">Sign In</button>
             <p id="l-err" class="text-red-500 text-xs mt-4 hidden bg-red-50 border border-red-100 p-3 rounded-lg font-medium"></p>
         </div>
@@ -59,34 +55,21 @@
     <aside class="hidden lg:flex flex-col w-64 bg-white border-r border-slate-200 h-full shrink-0 relative z-20">
         <div class="p-6 flex items-center gap-3 border-b border-slate-100">
             <div class="bg-brand-600 p-2 rounded-lg"><i class="ph ph-storefront text-white text-xl"></i></div>
-            <div>
-                <h1 id="s-name" class="font-bold text-slate-900 leading-none truncate max-w-[140px]">SWIFT POS</h1>
-            </div>
+            <div><h1 id="s-name" class="font-bold text-slate-900 leading-none truncate max-w-[140px]">SWIFT POS</h1></div>
         </div>
         
         <div class="flex-1 overflow-y-auto p-4 space-y-1">
             <p data-i18n="nav" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3 ml-2 mt-2">Navigation</p>
-            <button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg bg-brand-50 text-brand-700 font-semibold transition text-sm">
-                <i class="ph ph-squares-four text-lg"></i> <span data-i18n="pos">Point of Sale</span>
-            </button>
-            <button id="btn-items" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm">
-                <i class="ph ph-package text-lg"></i> <span data-i18n="inventory">Inventory</span>
-            </button>
-            <button id="btn-customers" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm">
-                <i class="ph ph-users text-lg"></i> <span data-i18n="customers">Customers</span>
-            </button>
-            <button id="btn-history" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm">
-                <i class="ph ph-receipt text-lg"></i> <span data-i18n="history">Transactions</span>
-            </button>
-            <button id="btn-reports" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm">
-                <i class="ph ph-chart-line-up text-lg"></i> <span data-i18n="reports">Reports</span>
-            </button>
-            <button id="btn-shift" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm">
-                <i class="ph ph-clock text-lg"></i> <span data-i18n="shifts">Shift Logs</span>
-            </button>
-            <button id="btn-settings" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm">
-                <i class="ph ph-gear text-lg"></i> <span data-i18n="settings">Settings</span>
-            </button>
+            <button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg bg-brand-50 text-brand-700 font-semibold transition text-sm"><i class="ph ph-squares-four text-lg"></i> <span data-i18n="pos">Point of Sale</span></button>
+            <button id="btn-items" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-package text-lg"></i> <span data-i18n="inventory">Inventory</span></button>
+            <button id="btn-purchases" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-shopping-cart text-lg"></i> <span data-i18n="purchases">Purchases</span></button>
+            <button id="btn-customers" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-users text-lg"></i> <span data-i18n="customers">Customers</span></button>
+            <button id="btn-debts" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-credit-card text-lg"></i> <span data-i18n="debts">Debts & Credits</span></button>
+            <button id="btn-expenses" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-money text-lg"></i> <span data-i18n="expenses">Expenses</span></button>
+            <button id="btn-payroll" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-users-three text-lg"></i> <span data-i18n="payroll">Payroll</span></button>
+            <button id="btn-history" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-receipt text-lg"></i> <span data-i18n="history">Transactions</span></button>
+            <button id="btn-reports" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-chart-line-up text-lg"></i> <span data-i18n="reports">Reports (P&L)</span></button>
+            <button id="btn-settings" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-gear text-lg"></i> <span data-i18n="settings">Settings</span></button>
         </div>
 
         <div class="p-4 border-t border-slate-100 space-y-2">
@@ -94,14 +77,11 @@
                 <div class="flex items-center gap-3"><i class="ph ph-translate text-lg"></i> <span data-i18n="language">Language</span></div>
                 <span id="lang-ind-d" class="font-bold text-brand-600">EN</span>
             </button>
-            <button id="lo-btn" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-600 hover:bg-red-50 font-medium transition text-sm">
-                <i class="ph ph-sign-out text-lg"></i> <span data-i18n="signout">Sign Out</span>
-            </button>
+            <button id="lo-btn" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-600 hover:bg-red-50 font-medium transition text-sm"><i class="ph ph-sign-out text-lg"></i> <span data-i18n="signout">Sign Out</span></button>
         </div>
     </aside>
 
     <div class="flex-1 flex flex-col min-w-0 h-full relative">
-        
         <header class="bg-white border-b border-slate-200 p-3 sm:p-4 flex items-center justify-between shrink-0 gap-3 z-10">
             <div class="flex items-center gap-2 lg:hidden">
                 <div class="bg-brand-600 p-1.5 rounded text-white"><i class="ph ph-storefront"></i></div>
@@ -122,287 +102,232 @@
 
         <div class="flex-1 flex flex-col overflow-hidden relative">
             <div class="bg-white/80 backdrop-blur-sm border-b border-slate-200 shrink-0 z-10">
-                <div id="category-sidebar" class="flex flex-row gap-2 overflow-x-auto no-scrollbar p-3 sm:p-4 items-center">
-                    </div>
+                <div id="category-sidebar" class="flex flex-row gap-2 overflow-x-auto no-scrollbar p-3 sm:p-4 items-center"></div>
             </div>
-
             <main class="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6 pb-24 lg:pb-6">
-                <div id="p-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 lg:gap-5">
-                    </div>
+                <div id="p-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 lg:gap-5"></div>
             </main>
         </div>
         
         <div class="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 p-3 shadow-[0_-10px_20px_rgba(0,0,0,0.05)] z-30 flex justify-between items-center">
-            <div>
-                <p data-i18n="total_bal" class="text-xs text-slate-500 font-medium">Total Balance</p>
-                <p id="mobile-cart-total" class="text-lg font-black text-slate-900">0.00 Ks</p>
-            </div>
-            <button onclick="toggleMobileCart()" class="bg-brand-600 text-white px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-md shadow-brand-600/20 active:scale-95 transition-transform">
-                <i class="ph ph-shopping-bag text-lg"></i> <span data-i18n="view_order">View Order</span>
-            </button>
+            <div><p data-i18n="total_bal" class="text-xs text-slate-500 font-medium">Total Balance</p><p id="mobile-cart-total" class="text-lg font-black text-slate-900">0.00 Ks</p></div>
+            <button onclick="toggleMobileCart()" class="bg-brand-600 text-white px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-md shadow-brand-600/20 active:scale-95 transition-transform"><i class="ph ph-shopping-bag text-lg"></i> <span data-i18n="view_order">View Order</span></button>
         </div>
     </div>
 
     <div id="cart-overlay" onclick="toggleMobileCart()" class="lg:hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 hidden opacity-0 transition-opacity duration-300"></div>
-    
     <aside id="cart-panel" class="fixed lg:relative inset-y-0 right-0 z-50 w-full sm:w-[400px] lg:w-[380px] xl:w-[400px] bg-white border-l border-slate-200 shadow-2xl lg:shadow-none transform translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col h-[100dvh] lg:h-full">
-        
         <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-white shrink-0">
-            <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                <i class="ph ph-shopping-bag text-brand-600"></i> <span data-i18n="order">Current Order</span>
-            </h2>
+            <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2"><i class="ph ph-shopping-bag text-brand-600"></i> <span data-i18n="order">Current Order</span></h2>
             <div class="flex items-center gap-2">
-                <button onclick="holdOrder()" title="Hold Order" class="p-1.5 text-orange-500 bg-orange-50 hover:bg-orange-100 rounded-lg transition-colors"><i class="ph ph-pause-circle text-lg"></i></button>
-                <button onclick="viewHeldOrders()" title="View Held Orders" class="p-1.5 text-blue-500 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors relative">
-                    <i class="ph ph-list-dashes text-lg"></i><span id="held-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-bold px-1.5 rounded-full hidden">0</span>
-                </button>
-                <button onclick="clearCart()" class="text-xs font-semibold text-red-600 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg transition-colors" data-i18n="clear">Clear</button>
+                <button onclick="holdOrder()" title="Hold Order" class="p-1.5 text-orange-500 bg-orange-50 hover:bg-orange-100 rounded-lg"><i class="ph ph-pause-circle text-lg"></i></button>
+                <button onclick="viewHeldOrders()" title="View Held Orders" class="p-1.5 text-blue-500 bg-blue-50 hover:bg-blue-100 rounded-lg relative"><i class="ph ph-list-dashes text-lg"></i><span id="held-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-bold px-1.5 rounded-full hidden">0</span></button>
+                <button onclick="clearCart()" class="text-xs font-semibold text-red-600 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg" data-i18n="clear">Clear</button>
                 <button onclick="toggleMobileCart()" class="lg:hidden p-1.5 text-slate-400 bg-slate-100 rounded-lg"><i class="ph ph-x text-lg"></i></button>
             </div>
         </div>
 
         <div class="p-3 border-b border-slate-100 bg-slate-50/50 shrink-0">
-            <div class="flex items-center gap-2 bg-white px-3 py-2 rounded-xl border border-slate-200 focus-within:border-brand-500 focus-within:ring-4 focus-within:ring-brand-500/10 transition shadow-sm">
-                <i class="ph ph-user text-slate-400"></i>
-                <select id="customer-select" class="w-full bg-transparent border-none outline-none text-sm font-semibold text-slate-700 cursor-pointer appearance-none">
-                    <option value="" data-i18n="walkin">Walk-in Customer</option>
-                </select>
+            <div class="flex items-center gap-2 bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm"><i class="ph ph-user text-slate-400"></i>
+                <select id="customer-select" class="w-full bg-transparent border-none outline-none text-sm font-semibold text-slate-700 cursor-pointer appearance-none"><option value="" data-i18n="walkin">Walk-in Customer</option></select>
                 <i class="ph ph-caret-down text-slate-400 text-xs"></i>
+            </div>
+            <div class="mt-2 flex items-center justify-end gap-2 text-xs font-medium text-slate-500">
+                <label><input type="radio" name="price_type" value="retail" checked onchange="renderCart()"> Retail Price</label>
+                <label><input type="radio" name="price_type" value="wholesale" onchange="renderCart()"> Wholesale Price</label>
             </div>
         </div>
 
-        <div id="c-list" class="flex-1 overflow-y-auto p-4 space-y-3 bg-slate-50/30">
-            <div class="text-center py-20 opacity-50 flex flex-col items-center">
-                <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-3"><i class="ph ph-shopping-cart text-3xl text-slate-400"></i></div>
-                <p data-i18n="empty" class="font-medium text-sm text-slate-500">Cart is empty</p>
-            </div>
-        </div>
+        <div id="c-list" class="flex-1 overflow-y-auto p-4 space-y-3 bg-slate-50/30"></div>
 
         <div class="p-4 bg-white border-t border-slate-200 shadow-[0_-4px_10px_rgba(0,0,0,0.02)] shrink-0">
             <div class="flex gap-3 mb-3">
-                <div class="flex-1 bg-white border border-slate-200 rounded-xl p-2 flex items-center justify-between shadow-sm focus-within:border-brand-500 transition">
-                    <span data-i18n="disc" class="text-[10px] font-bold text-slate-400 uppercase tracking-wider ml-1">Disc%</span>
-                    <input id="discount" type="number" value="0" class="w-14 text-right border-none outline-none text-sm font-bold text-slate-900 bg-transparent">
-                </div>
-                <div class="flex-1 bg-white border border-slate-200 rounded-xl p-2 flex items-center justify-between shadow-sm focus-within:border-brand-500 transition">
-                    <span data-i18n="tax" class="text-[10px] font-bold text-slate-400 uppercase tracking-wider ml-1">Tax%</span>
-                    <input id="tax" type="number" value="0" class="w-14 text-right border-none outline-none text-sm font-bold text-slate-900 bg-transparent">
-                </div>
+                <div class="flex-1 bg-white border border-slate-200 rounded-xl p-2 flex items-center justify-between shadow-sm"><span data-i18n="disc" class="text-[10px] font-bold text-slate-400 uppercase ml-1">Disc%</span><input id="discount" type="number" value="0" class="w-14 text-right border-none outline-none text-sm font-bold text-slate-900 bg-transparent"></div>
+                <div class="flex-1 bg-white border border-slate-200 rounded-xl p-2 flex items-center justify-between shadow-sm"><span data-i18n="tax" class="text-[10px] font-bold text-slate-400 uppercase ml-1">Tax%</span><input id="tax" type="number" value="0" class="w-14 text-right border-none outline-none text-sm font-bold text-slate-900 bg-transparent"></div>
             </div>
-
-            <div class="mb-4 bg-white border border-slate-200 rounded-xl p-2.5 flex items-center shadow-sm focus-within:border-brand-500 transition">
-                <div class="bg-indigo-50 p-1.5 rounded-lg ml-1 mr-2"><i class="ph ph-wallet text-brand-600"></i></div>
-                <select id="payment-method" class="w-full bg-transparent border-none outline-none text-sm font-semibold text-slate-700 appearance-none cursor-pointer">
-                    <option value="Cash">Cash</option><option value="Card">Card</option><option value="KPay">KPay</option><option value="WavePay">WavePay</option>
-                </select>
+            <div class="mb-4 bg-white border border-slate-200 rounded-xl p-2.5 flex items-center shadow-sm"><div class="bg-indigo-50 p-1.5 rounded-lg ml-1 mr-2"><i class="ph ph-wallet text-brand-600"></i></div>
+                <select id="payment-method" class="w-full bg-transparent border-none outline-none text-sm font-semibold text-slate-700 appearance-none cursor-pointer"><option value="Cash">Cash</option><option value="Card">Card</option><option value="KPay">KPay</option><option value="WavePay">WavePay</option><option value="Credit">Credit (အကြွေး)</option></select>
                 <i class="ph ph-caret-down text-slate-400 text-xs pr-2"></i>
             </div>
-
-            <div id="cart-summary" class="space-y-1.5 mb-4 text-sm font-medium border-t border-slate-100 pt-3">
-                <div class="flex justify-between text-slate-500"><span data-i18n="subtotal">Subtotal</span><span class="text-slate-700">0.00</span></div>
-                <div class="flex justify-between text-slate-500"><span data-i18n="discount">Discount</span><span class="text-red-500">0.00</span></div>
-                <div class="flex justify-between items-end mt-2 pt-2 border-t border-slate-100">
-                    <span data-i18n="total" class="text-base font-bold text-slate-900">Total</span>
-                    <span class="text-2xl font-black text-brand-600">0.00 Ks</span>
-                </div>
-            </div>
-
-            <button id="chk-btn" class="w-full bg-slate-900 hover:bg-black text-white font-bold py-3.5 rounded-xl shadow-lg shadow-slate-900/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-base">
-                <i class="ph ph-receipt text-xl"></i> <span data-i18n="pay">Charge & Print</span>
-            </button>
+            <div id="cart-summary" class="space-y-1.5 mb-4 text-sm font-medium border-t border-slate-100 pt-3"></div>
+            <button id="chk-btn" class="w-full bg-slate-900 hover:bg-black text-white font-bold py-3.5 rounded-xl shadow-lg shadow-slate-900/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-base"><i class="ph ph-receipt text-xl"></i> <span data-i18n="pay">Charge & Print</span></button>
         </div>
     </aside>
-
 </div>
 
 <div id="mob-menu-overlay" onclick="toggleMobileMenu()" class="lg:hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 hidden opacity-0 transition-opacity duration-300"></div>
 <div id="mob-menu" class="lg:hidden fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300 flex flex-col h-[100dvh]">
-    <div class="p-6 border-b border-slate-100 flex justify-between items-center">
-        <h1 class="font-bold text-slate-900">Menu</h1>
-        <button onclick="toggleMobileMenu()"><i class="ph ph-x text-lg text-slate-500"></i></button>
-    </div>
-    <div class="flex-1 overflow-y-auto p-4 space-y-1" id="mob-nav-links">
-        </div>
+    <div class="p-6 border-b border-slate-100 flex justify-between items-center"><h1 class="font-bold text-slate-900">Menu</h1><button onclick="toggleMobileMenu()"><i class="ph ph-x text-lg text-slate-500"></i></button></div>
+    <div class="flex-1 overflow-y-auto p-4 space-y-1" id="mob-nav-links"></div>
 </div>
 
 <div id="r-p" class="hidden"></div>
-
-<div id="modal" class="hidden fixed inset-0 bg-slate-900/40 flex items-center justify-center z-50 backdrop-blur-sm transition-opacity p-4">
-    <div id="modal-content" class="bg-white p-5 sm:p-8 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90dvh] overflow-y-auto border border-slate-100 text-slate-800"></div>
-</div>
+<div id="modal" class="hidden fixed inset-0 bg-slate-900/40 flex items-center justify-center z-50 backdrop-blur-sm transition-opacity p-4"><div id="modal-content" class="bg-white p-5 sm:p-8 rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90dvh] overflow-y-auto border border-slate-100 text-slate-800"></div></div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
     import { getFirestore, doc, getDoc, getDocs, setDoc, collection, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, where, limit, serverTimestamp, increment, writeBatch, enableMultiTabIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyC53tnpw-3Uupzc1Me8ZGEDzy903yG-S0Y",
         authDomain: "ascedia-60dd4.firebaseapp.com",
         databaseURL: "https://ascedia-60dd4-default-rtdb.asia-southeast1.firebasedatabase.app",
-        projectId: "ascedia-60dd4",
-        storageBucket: "ascedia-60dd4.firebasestorage.app",
-        messagingSenderId: "77398379374",
-        appId: "1:77398379374:web:5f1c72cd77f950a24dcf7f"
+        projectId: "ascedia-60dd4"
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
-    
     enableMultiTabIndexedDbPersistence(db).catch(err => console.warn('Offline Mode Unavailable:', err));
 
     let shop_id = null; let shop_name = ""; let userRole = 'staff';
-    let shop_settings = { footer: "Thank you for shopping with us!" };
-    window.cart = [];
-    let allProducts = [];
-    let currentCategory = 'All';
-    let heldOrders = [];
+    let shop_settings = { footer: "Thank you for shopping with us!", phone: "", address: "", logo: "" };
+    window.cart = []; let allProducts = []; let currentCategory = 'All'; let heldOrders = [];
 
-    // --- BILINGUAL (i18n) SYSTEM ---
+    // --- i18n SYSTEM ---
     window.currentLang = 'en';
     const dict = {
         en: {
-            nav: "Navigation", pos: "Point of Sale", inventory: "Inventory", customers: "Customers", history: "Transactions", reports: "Reports", shifts: "Shift Logs", settings: "Settings", language: "Language", signout: "Sign Out",
-            search: "Search product or scan barcode...", order: "Current Order", walkin: "Walk-in Customer", empty: "Cart is empty", clear: "Clear", disc: "Disc%", tax: "Tax%", subtotal: "Subtotal", discount: "Discount", total: "Total", pay: "Charge & Print", total_bal: "Total Balance", view_order: "View Order", hold: "Hold Order",
-            set_title: "Store Settings", set_name: "Store Name", set_foot: "Receipt Footer Note", save: "Save Settings"
+            nav: "Navigation", pos: "Point of Sale", inventory: "Inventory", customers: "Customers", purchases: "Purchases", expenses: "Expenses", payroll: "Payroll", debts: "Debts & Credit", history: "Transactions", reports: "Reports (P&L)", shifts: "Shift Logs", settings: "Settings", language: "Language", signout: "Sign Out",
+            search: "Search product...", order: "Current Order", walkin: "Walk-in Customer", empty: "Cart is empty", clear: "Clear", disc: "Disc%", tax: "Tax%", subtotal: "Subtotal", discount: "Discount", total: "Total", pay: "Charge & Print", total_bal: "Total Balance", view_order: "View Order", hold: "Hold Order",
+            set_title: "Store Settings", set_name: "Store Name", set_foot: "Receipt Footer", save: "Save Settings", add: "Add New"
         },
         mm: {
-            nav: "မီနူးများ", pos: "အရောင်းမှတ်စနစ်", inventory: "ကုန်ပစ္စည်းများ", customers: "ဖောက်သည်များ", history: "အရောင်းမှတ်တမ်းများ", reports: "အစီရင်ခံစာများ", shifts: "အလုပ်ချိန်မှတ်တမ်း", settings: "ဆက်တင်များ", language: "ဘာသာစကား", signout: "အကောင့်ထွက်မည်",
-            search: "ပစ္စည်းရှာရန် (သို့) ဘားကုဒ်ဖတ်ရန်...", order: "လက်ရှိအော်ဒါ", walkin: "ပုံမှန်ဝယ်သူ", empty: "ခြင်းတောင်းလွတ်နေပါသည်", clear: "ဖျက်မည်", disc: "လျှော့စျေး%", tax: "အခွန်%", subtotal: "ကျသင့်ငွေ", discount: "လျှော့ငွေ", total: "စုစုပေါင်း", pay: "ငွေရှင်း & ဘေလ်ထုတ်မည်", total_bal: "စုစုပေါင်း ကျသင့်ငွေ", view_order: "အော်ဒါကြည့်မည်", hold: "ခေတ္တဆိုင်းငံ့မည်",
-            set_title: "ဆိုင် ဆက်တင်များ", set_name: "ဆိုင်အမည်", set_foot: "ဘေလ်အောက်ဆုံးစာသား", save: "သိမ်းမည်"
+            nav: "မီနူးများ", pos: "အရောင်းမှတ်စနစ်", inventory: "ကုန်စည်စာရင်း", customers: "ဖောက်သည်များ", purchases: "အဝယ်စာရင်း", expenses: "ကုန်ကျစရိတ်များ", payroll: "ဝန်ထမ်းလစာစရိတ်", debts: "အကြွေးစာရင်းများ", history: "အရောင်းမှတ်တမ်း", reports: "အရှုံးအမြတ် အစီရင်ခံစာ", shifts: "အလုပ်ချိန်မှတ်တမ်း", settings: "ဆက်တင်များ", language: "ဘာသာစကား", signout: "အကောင့်ထွက်မည်",
+            search: "ပစ္စည်းရှာရန်...", order: "လက်ရှိအော်ဒါ", walkin: "ပုံမှန်ဝယ်သူ", empty: "ခြင်းတောင်းလွတ်နေပါသည်", clear: "ဖျက်မည်", disc: "လျှော့စျေး%", tax: "အခွန်%", subtotal: "ကျသင့်ငွေ", discount: "လျှော့ငွေ", total: "စုစုပေါင်း", pay: "ငွေရှင်း & ဘေလ်ထုတ်မည်", total_bal: "စုစုပေါင်း ကျသင့်ငွေ", view_order: "အော်ဒါကြည့်မည်", hold: "ခေတ္တဆိုင်းငံ့မည်",
+            set_title: "ဆိုင် ဆက်တင်များ", set_name: "ဆိုင်အမည်", set_foot: "ဘေလ်အောက်ဆုံးစာသား", save: "သိမ်းမည်", add: "အသစ်ထည့်မည်"
         }
     };
-
     window.t = (key) => dict[currentLang][key] || key;
 
     window.toggleLang = () => {
         currentLang = currentLang === 'en' ? 'mm' : 'en';
         document.getElementById('lang-ind-d').innerText = currentLang.toUpperCase();
         document.getElementById('lang-ind-m').innerText = currentLang.toUpperCase();
-        
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-            const key = el.getAttribute('data-i18n');
-            if(dict[currentLang][key]) el.innerText = dict[currentLang][key];
-        });
-        document.querySelectorAll('[data-i18n-ph]').forEach(el => {
-            const key = el.getAttribute('data-i18n-ph');
-            if(dict[currentLang][key]) el.placeholder = dict[currentLang][key];
-        });
+        document.querySelectorAll('[data-i18n]').forEach(el => { const k = el.getAttribute('data-i18n'); if(dict[currentLang][k]) el.innerText = dict[currentLang][k]; });
+        document.querySelectorAll('[data-i18n-ph]').forEach(el => { const k = el.getAttribute('data-i18n-ph'); if(dict[currentLang][k]) el.placeholder = dict[currentLang][k]; });
         renderCategorySidebar(['All', ...Array.from(new Set(allProducts.map(p => p.category).filter(Boolean)))]);
-        if(window.cart.length === 0) renderCart(); // update empty text
+        renderCart();
     };
 
-    // Mobile Menu Setup
     document.getElementById('mob-nav-links').innerHTML = `
-        <button onclick="toggleMobileMenu()" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg bg-brand-50 text-brand-700 font-semibold transition text-sm"><i class="ph ph-squares-four text-lg"></i> <span data-i18n="pos">Point of Sale</span></button>
-        <button id="btn-items-m2" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 hover:bg-slate-50 font-medium transition text-sm"><i class="ph ph-package text-lg"></i> <span data-i18n="inventory">Inventory</span></button>
-        <button id="btn-customers-m2" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 hover:bg-slate-50 font-medium transition text-sm"><i class="ph ph-users text-lg"></i> <span data-i18n="customers">Customers</span></button>
-        <button id="btn-history-m" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 hover:bg-slate-50 font-medium transition text-sm"><i class="ph ph-receipt text-lg"></i> <span data-i18n="history">Transactions</span></button>
-        <button id="btn-reports-m2" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 hover:bg-slate-50 font-medium transition text-sm"><i class="ph ph-chart-line-up text-lg"></i> <span data-i18n="reports">Reports</span></button>
-        <button id="btn-shift-m" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 hover:bg-slate-50 font-medium transition text-sm"><i class="ph ph-clock text-lg"></i> <span data-i18n="shifts">Shift Logs</span></button>
-        <button id="btn-settings-m" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 hover:bg-slate-50 font-medium transition text-sm"><i class="ph ph-gear text-lg"></i> <span data-i18n="settings">Settings</span></button>
-        <div class="border-t border-slate-100 mt-2 pt-2"><button id="lo-btn-m" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-red-600 hover:bg-red-50 font-medium transition text-sm"><i class="ph ph-sign-out text-lg"></i> <span data-i18n="signout">Sign Out</span></button></div>
+        <button onclick="toggleMobileMenu()" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg bg-brand-50 text-brand-700 font-semibold text-sm"><i class="ph ph-squares-four text-lg"></i> <span data-i18n="pos">Point of Sale</span></button>
+        <button id="btn-items-m" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 text-sm"><i class="ph ph-package text-lg"></i> <span data-i18n="inventory">Inventory</span></button>
+        <button id="btn-purchases-m" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 text-sm"><i class="ph ph-shopping-cart text-lg"></i> <span data-i18n="purchases">Purchases</span></button>
+        <button id="btn-customers-m" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 text-sm"><i class="ph ph-users text-lg"></i> <span data-i18n="customers">Customers</span></button>
+        <button id="btn-debts-m" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 text-sm"><i class="ph ph-credit-card text-lg"></i> <span data-i18n="debts">Debts</span></button>
+        <button id="btn-expenses-m" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 text-sm"><i class="ph ph-money text-lg"></i> <span data-i18n="expenses">Expenses</span></button>
+        <button id="btn-payroll-m" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 text-sm"><i class="ph ph-users-three text-lg"></i> <span data-i18n="payroll">Payroll</span></button>
+        <button id="btn-history-m" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 text-sm"><i class="ph ph-receipt text-lg"></i> <span data-i18n="history">Transactions</span></button>
+        <button id="btn-reports-m" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 text-sm"><i class="ph ph-chart-line-up text-lg"></i> <span data-i18n="reports">Reports</span></button>
+        <button id="btn-settings-m" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 text-sm"><i class="ph ph-gear text-lg"></i> <span data-i18n="settings">Settings</span></button>
+        <div class="border-t border-slate-100 mt-2 pt-2"><button id="lo-btn-m" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-red-600 text-sm"><i class="ph ph-sign-out text-lg"></i> <span data-i18n="signout">Sign Out</span></button></div>
     `;
 
     const updateText = (id, txt) => { const el = document.getElementById(id); if (el) el.innerText = txt; };
 
-    // Mobile UI Toggles
     window.toggleMobileCart = () => {
-        const panel = document.getElementById('cart-panel');
-        const overlay = document.getElementById('cart-overlay');
-        if (panel.classList.contains('translate-x-full')) {
-            overlay.classList.remove('hidden'); setTimeout(() => overlay.classList.remove('opacity-0'), 10);
-            panel.classList.remove('translate-x-full');
-        } else {
-            panel.classList.add('translate-x-full'); overlay.classList.add('opacity-0');
-            setTimeout(() => overlay.classList.add('hidden'), 300);
-        }
+        const p = document.getElementById('cart-panel'); const o = document.getElementById('cart-overlay');
+        if (p.classList.contains('translate-x-full')) { o.classList.remove('hidden'); setTimeout(()=>o.classList.remove('opacity-0'),10); p.classList.remove('translate-x-full'); } 
+        else { p.classList.add('translate-x-full'); o.classList.add('opacity-0'); setTimeout(()=>o.classList.add('hidden'),300); }
     };
-
     window.toggleMobileMenu = () => {
-        const menu = document.getElementById('mob-menu');
-        const overlay = document.getElementById('mob-menu-overlay');
-        if (menu.classList.contains('-translate-x-full')) {
-            overlay.classList.remove('hidden'); setTimeout(() => overlay.classList.remove('opacity-0'), 10);
-            menu.classList.remove('-translate-x-full');
-        } else {
-            menu.classList.add('-translate-x-full'); overlay.classList.add('opacity-0');
-            setTimeout(() => overlay.classList.add('hidden'), 300);
-        }
+        const m = document.getElementById('mob-menu'); const o = document.getElementById('mob-menu-overlay');
+        if (m.classList.contains('-translate-x-full')) { o.classList.remove('hidden'); setTimeout(()=>o.classList.remove('opacity-0'),10); m.classList.remove('-translate-x-full'); } 
+        else { m.classList.add('-translate-x-full'); o.classList.add('opacity-0'); setTimeout(()=>o.classList.add('hidden'),300); }
     };
 
-    // ---- AUTH ----
-    document.getElementById('l-btn').onclick = async () => {
-        const u = document.getElementById('u').value.trim();
-        const p = document.getElementById('p').value;
-        const err = document.getElementById('l-err');
-        if (err) err.classList.add('hidden');
+    // ---- AUTO LOGIN (SAVE LOGIN) SYSTEM ----
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            try {
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (userDoc.exists()) {
+                    const data = userDoc.data(); 
+                    if (new Date() > new Date(data.expiryDate)) { signOut(auth); return; }
+                    
+                    shop_id = data.shopId; shop_name = data.shopName; userRole = data.role || 'staff'; 
+                    updateText('s-name', shop_name);
+                    
+                    document.getElementById('pos-login').style.display = 'none'; 
+                    const mainApp = document.getElementById('pos-main'); 
+                    mainApp.classList.remove('hidden'); 
+                    mainApp.style.display = 'flex';
+                    
+                    loadProducts(); loadSettings();
+                }
+            } catch (e) { console.error("Auto login check failed:", e); }
+        }
+    });
 
+    // Check Master Login from LocalStorage
+    if (localStorage.getItem('master_logged_in') === 'true') {
+        shop_id = 'master_shop'; shop_name = 'SWIFT POS'; userRole = 'owner'; 
+        updateText('s-name', shop_name);
+        document.getElementById('pos-login').style.display = 'none'; 
+        const mainApp = document.getElementById('pos-main'); 
+        mainApp.classList.remove('hidden'); 
+        mainApp.style.display = 'flex';
+        loadProducts(); loadSettings();
+    }
+
+    // ---- MANUAL LOGIN ----
+    document.getElementById('l-btn').onclick = async () => {
+        const u = document.getElementById('u').value.trim(); const p = document.getElementById('p').value; const err = document.getElementById('l-err'); if(err) err.classList.add('hidden');
+        
         if (u === 'master' && p === 'master123') {
-            shop_id = 'master_shop'; shop_name = 'SWIFT TEST STORE'; userRole = 'owner';
-            updateText('s-name', shop_name);
-            document.getElementById('pos-login').style.display = 'none';
-            const mainApp = document.getElementById('pos-main'); mainApp.classList.remove('hidden'); mainApp.style.display = 'flex';
+            localStorage.setItem('master_logged_in', 'true'); // Save Master Login
+            shop_id = 'master_shop'; shop_name = 'SWIFT POS'; userRole = 'owner'; updateText('s-name', shop_name);
+            document.getElementById('pos-login').style.display = 'none'; document.getElementById('pos-main').classList.remove('hidden'); document.getElementById('pos-main').style.display = 'flex';
             loadProducts(); loadSettings(); return;
         }
-
+        
         try {
             document.getElementById('l-btn').innerText = "Authenticating...";
             const cred = await signInWithEmailAndPassword(auth, `${u}@pos.local`, p);
             const userDoc = await getDoc(doc(db, "users", cred.user.uid));
             if (userDoc.exists()) {
-                const data = userDoc.data();
-                if (new Date() > new Date(data.expiryDate)) { signOut(auth); throw new Error("Subscription Expired! Contact Admin."); }
-                shop_id = data.shopId; shop_name = data.shopName; userRole = data.role || 'staff';
-                updateText('s-name', shop_name);
-                document.getElementById('pos-login').style.display = 'none';
-                const mainApp = document.getElementById('pos-main'); mainApp.classList.remove('hidden'); mainApp.style.display = 'flex';
+                const data = userDoc.data(); if (new Date() > new Date(data.expiryDate)) { signOut(auth); throw new Error("Subscription Expired!"); }
+                
+                shop_id = data.shopId; shop_name = data.shopName; userRole = data.role || 'staff'; updateText('s-name', shop_name);
+                document.getElementById('pos-login').style.display = 'none'; document.getElementById('pos-main').classList.remove('hidden'); document.getElementById('pos-main').style.display = 'flex';
                 loadProducts(); loadSettings();
             }
-        } catch (e) { if (err) { err.innerText = e.message; err.classList.remove('hidden'); } }
-        document.getElementById('l-btn').innerText = "Sign In";
+        } catch (e) { if(err){ err.innerText = e.message; err.classList.remove('hidden'); } document.getElementById('l-btn').innerText = "Sign In"; }
     };
+    
+    // ---- LOGOUT ----
+    const handleLogout = () => { 
+        localStorage.removeItem('master_logged_in'); // Clear saved master session
+        signOut(auth); 
+        location.reload(); 
+    };
+    document.getElementById('lo-btn').onclick = handleLogout; document.getElementById('lo-btn-m').onclick = handleLogout;
 
-    const handleLogout = () => { signOut(auth); location.reload(); };
-    document.getElementById('lo-btn').onclick = handleLogout;
-    document.getElementById('lo-btn-m').onclick = handleLogout;
-
-    // Load Settings
+    // SETTINGS
     async function loadSettings() {
         if(!shop_id) return;
         const sDoc = await getDoc(doc(db, "shops", shop_id, "settings", "general"));
-        if(sDoc.exists()) {
-            shop_settings = sDoc.data();
-            updateText('s-name', shop_settings.shopName || shop_name);
-            shop_name = shop_settings.shopName || shop_name;
-        }
+        if(sDoc.exists()) { shop_settings = sDoc.data(); updateText('s-name', shop_settings.shopName || shop_name); shop_name = shop_settings.shopName || shop_name; }
     }
 
-    // ---- LOAD PRODUCTS & CATEGORIES ----
+    // PRODUCTS
     function loadProducts() {
         if (!shop_id) return;
         onSnapshot(query(collection(db, "shops", shop_id, "products"), orderBy("name")), (snap) => {
             allProducts = []; const categories = new Set();
-            snap.forEach(d => {
-                const p = { id: d.id, ...d.data() }; allProducts.push(p);
-                if (p.category && p.category.trim() !== '') categories.add(p.category.trim());
-            });
-            renderCategorySidebar(['All', ...Array.from(categories)]);
-            renderProductGrid();
+            snap.forEach(d => { const p = { id: d.id, ...d.data() }; allProducts.push(p); if (p.category) categories.add(p.category.trim()); });
+            renderCategorySidebar(['All', ...Array.from(categories)]); renderProductGrid();
         });
     }
 
     function renderCategorySidebar(categories) {
-        const sidebar = document.getElementById('category-sidebar'); if (!sidebar) return;
-        sidebar.innerHTML = '';
+        const sidebar = document.getElementById('category-sidebar'); if (!sidebar) return; sidebar.innerHTML = '';
         categories.forEach(cat => {
             const isActive = cat === currentCategory;
             const activeClass = isActive ? 'bg-slate-900 text-white shadow-md' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50';
-            sidebar.innerHTML += `
-            <button onclick="setCategory('${cat}')" class="${activeClass} px-4 py-2 rounded-xl flex items-center gap-2 transition-all shrink-0 whitespace-nowrap">
-                <span class="text-xs sm:text-sm font-bold">${cat === 'All' ? (currentLang === 'mm' ? 'အားလုံး' : 'All') : cat}</span>
-            </button>`;
+            sidebar.innerHTML += `<button onclick="setCategory('${cat}')" class="${activeClass} px-4 py-2 rounded-xl flex items-center gap-2 transition-all shrink-0 whitespace-nowrap"><span class="text-xs sm:text-sm font-bold">${cat === 'All' ? (currentLang==='mm'?'အားလုံး':'All') : cat}</span></button>`;
         });
     }
 
@@ -411,32 +336,35 @@
     function renderProductGrid() {
         const grid = document.getElementById('p-grid'); if (!grid) return; grid.innerHTML = '';
         const filteredProducts = currentCategory === 'All' ? allProducts : allProducts.filter(p => p.category === currentCategory);
-            
-        if (filteredProducts.length === 0) {
-            grid.innerHTML = `<div class="col-span-full flex flex-col items-center justify-center text-center py-20 opacity-60"><div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mb-4 shadow-sm border border-slate-100"><i class="ph ph-package text-4xl text-slate-400"></i></div><p class="text-slate-600 font-bold text-lg">No items available</p></div>`; return;
-        }
+        if (filteredProducts.length === 0) { grid.innerHTML = `<div class="col-span-full flex flex-col items-center justify-center text-center py-20 opacity-60"><i class="ph ph-package text-4xl text-slate-400 mb-2"></i><p class="text-slate-600 font-bold">No items available</p></div>`; return; }
 
         filteredProducts.forEach(p => {
             const isLow = p.quantity <= (p.lowStockThreshold || 5);
+            let isExpiring = false;
+            if(p.expiryDate) { const daysLeft = (new Date(p.expiryDate) - new Date()) / (1000 * 60 * 60 * 24); if(daysLeft <= 30) isExpiring = true; }
+            
             const stockClass = isLow ? 'text-red-600 bg-red-50 border-red-100' : 'text-slate-500 bg-slate-100 border-transparent';
+            const expBadge = isExpiring ? `<span class="absolute top-2 left-2 bg-red-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow-sm flex items-center gap-1"><i class="ph ph-warning-circle"></i> EXP Soon</span>` : '';
+            
             grid.innerHTML += `
-            <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-lg hover:-translate-y-1 hover:border-brand-300 cursor-pointer transition-all duration-300 flex flex-col relative" onclick="addToCart('${p.id}')">
+            <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-lg hover:-translate-y-1 cursor-pointer transition-all flex flex-col relative" onclick="addToCart('${p.id}')">
                 <div class="h-24 sm:h-28 bg-slate-50 flex items-center justify-center relative border-b border-slate-100">
                     <div class="text-slate-400 text-2xl font-black opacity-20 uppercase">${p.name.substring(0,2)}</div>
-                    ${p.category ? `<span class="absolute top-2 right-2 bg-white text-[10px] font-bold px-2 py-1 rounded-lg text-slate-600 border border-slate-200 shadow-sm">${p.category}</span>` : ''}
+                    ${p.category ? `<span class="absolute top-2 right-2 bg-white text-[9px] font-bold px-2 py-0.5 rounded-lg text-slate-600 border border-slate-200">${p.category}</span>` : ''}
+                    ${expBadge}
                 </div>
-                <div class="p-3 sm:p-4 flex flex-col flex-1 justify-between bg-white">
-                    <div class="text-sm font-bold leading-tight mb-2 text-slate-800 line-clamp-2">${p.name}</div>
+                <div class="p-3 sm:p-4 flex flex-col flex-1 justify-between">
+                    <div class="text-sm font-bold leading-tight mb-1 text-slate-800 line-clamp-2">${p.name} ${p.variant ? `(${p.variant})` : ''}</div>
                     <div class="flex items-end justify-between mt-auto">
-                        <div class="text-brand-600 font-black text-base sm:text-lg">${p.price.toLocaleString()} Ks</div>
-                        <div class="text-[10px] px-2 py-1 rounded border font-bold ${stockClass}">${p.quantity} Left</div>
+                        <div class="text-brand-600 font-black text-sm sm:text-base">${(p.retailPrice || p.price || 0).toLocaleString()} Ks</div>
+                        <div class="text-[9px] px-1.5 py-0.5 rounded border font-bold ${stockClass}">${p.quantity} ${p.unit || ''}</div>
                     </div>
                 </div>
             </div>`;
         });
     }
 
-    // ---- CART & CHECKOUT ----
+    // CART
     window.addToCart = async (productId) => {
         const product = allProducts.find(p => p.id === productId); if (!product) return;
         const existing = window.cart.find(item => item.id === product.id);
@@ -448,308 +376,336 @@
     document.getElementById('barcode-input').addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             const code = e.target.value.trim().toLowerCase();
-            if (code) { const product = allProducts.find(p => p.sku && p.sku.toLowerCase() === code); if (product) addToCart(product.id); else alert('Not found: ' + code); }
+            if (code) { const p = allProducts.find(p => p.sku && p.sku.toLowerCase() === code); if (p) addToCart(p.id); else alert('Not found: ' + code); }
             e.target.value = '';
         }
     });
-    document.getElementById('clear-barcode').onclick = () => { document.getElementById('barcode-input').value = ''; };
 
     window.clearCart = () => { window.cart = []; renderCart(); };
 
-    function renderCart() {
+    window.renderCart = () => {
         const list = document.getElementById('c-list'); if (!list) return; list.innerHTML = '';
-        if (window.cart.length === 0) {
-            list.innerHTML = `<div class="text-center py-20 opacity-60 flex flex-col items-center"><div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-3"><i class="ph ph-shopping-cart text-3xl text-slate-400"></i></div><p class="font-medium text-sm text-slate-500">${t('empty')}</p></div>`;
-            updateCartSummary(); return;
-        }
+        if (window.cart.length === 0) { list.innerHTML = `<div class="text-center py-20 opacity-60"><p class="font-medium text-sm text-slate-500">${t('empty')}</p></div>`; updateCartSummary(); return; }
 
-        const grouped = window.cart.reduce((a, c) => { const found = a.find(x => x.id === c.id); if (found) { found.qty++; } else { a.push({ ...c, qty: 1 }); } return a; }, []);
+        const priceType = document.querySelector('input[name="price_type"]:checked').value;
+
+        const grouped = window.cart.reduce((a, c) => { const f = a.find(x => x.id === c.id); if (f) { f.qty++; } else { a.push({ ...c, qty: 1 }); } return a; }, []);
         grouped.forEach(item => {
+            const usePrice = priceType === 'wholesale' ? (item.wholesalePrice || item.retailPrice || item.price) : (item.retailPrice || item.price);
             list.innerHTML += `
-            <div class="flex justify-between items-center group border border-slate-100 mb-2 bg-white hover:border-brand-200 p-2.5 rounded-xl transition-all shadow-sm">
-                <div class="flex gap-3 items-center"><div class="w-8 h-8 rounded-lg border border-slate-100 flex items-center justify-center text-xs font-bold text-slate-600 bg-slate-50 shrink-0">x${item.qty}</div>
-                <div><div class="text-sm font-bold text-slate-800 leading-tight line-clamp-1">${item.name}</div><div class="text-[11px] font-semibold text-slate-400 mt-0.5">${item.price.toLocaleString()} Ks</div></div></div>
-                <div class="flex items-center gap-3 shrink-0"><div class="text-sm font-bold text-slate-800">${(item.price * item.qty).toLocaleString()}</div><button onclick="removeFromCart('${item.id}')" class="text-slate-400 hover:text-red-500 hover:bg-red-50 p-1.5 rounded-lg transition-colors"><i class="ph ph-trash text-lg"></i></button></div>
+            <div class="flex justify-between items-center bg-white border border-slate-100 mb-2 p-2 rounded-xl shadow-sm">
+                <div class="flex gap-2 items-center"><div class="w-7 h-7 rounded border bg-slate-50 flex items-center justify-center text-xs font-bold text-slate-600">x${item.qty}</div>
+                <div><div class="text-xs font-bold text-slate-800 line-clamp-1">${item.name} ${item.variant?`(${item.variant})`:''}</div><div class="text-[10px] text-slate-400">${usePrice.toLocaleString()} Ks</div></div></div>
+                <div class="flex items-center gap-2"><div class="text-xs font-bold text-slate-800">${(usePrice * item.qty).toLocaleString()}</div><button onclick="removeFromCart('${item.id}')" class="text-red-400 p-1"><i class="ph ph-trash"></i></button></div>
             </div>`;
         });
         updateCartSummary();
-    }
-    
+    };
     window.removeFromCart = (id) => { window.cart = window.cart.filter(i => i.id !== id); renderCart(); };
-
-    document.getElementById('discount').addEventListener('input', updateCartSummary);
-    document.getElementById('tax').addEventListener('input', updateCartSummary);
+    document.getElementById('discount').addEventListener('input', updateCartSummary); document.getElementById('tax').addEventListener('input', updateCartSummary);
 
     function updateCartSummary() {
-        const subTotal = window.cart.reduce((sum, i) => sum + (i.price * (i.qty || 1)), 0);
-        const disc = parseFloat(document.getElementById('discount')?.value) || 0;
-        const tax = parseFloat(document.getElementById('tax')?.value) || 0;
+        const priceType = document.querySelector('input[name="price_type"]:checked')?.value || 'retail';
+        const subTotal = window.cart.reduce((sum, i) => {
+            const p = priceType === 'wholesale' ? (i.wholesalePrice || i.retailPrice || i.price) : (i.retailPrice || i.price);
+            return sum + (p * (i.qty || 1));
+        }, 0);
+        const disc = parseFloat(document.getElementById('discount')?.value) || 0; const tax = parseFloat(document.getElementById('tax')?.value) || 0;
         const total = (subTotal - (subTotal * disc / 100)) + ((subTotal - (subTotal * disc / 100)) * tax / 100);
         
         document.getElementById('cart-summary').innerHTML = `
-            <div class="flex justify-between text-slate-500 font-semibold"><span>${t('subtotal')}</span><span class="text-slate-700">${subTotal.toLocaleString()}</span></div>
-            <div class="flex justify-between text-slate-500 font-semibold"><span>${t('discount')} (${disc}%)</span><span class="text-red-500">-${(subTotal * disc / 100).toLocaleString()}</span></div>
-            <div class="flex justify-between items-end mt-2 pt-2 border-t border-slate-100"><span class="text-base font-bold text-slate-800">${t('total')}</span><span class="text-xl lg:text-2xl font-black text-brand-600">${total.toLocaleString()} Ks</span></div>`;
-        const mobileTotal = document.getElementById('mobile-cart-total'); if(mobileTotal) mobileTotal.innerText = `${total.toLocaleString()} Ks`;
+            <div class="flex justify-between text-slate-500 text-xs"><span>${t('subtotal')}</span><span class="text-slate-700">${subTotal.toLocaleString()}</span></div>
+            <div class="flex justify-between text-slate-500 text-xs"><span>${t('discount')} (${disc}%)</span><span class="text-red-500">-${(subTotal * disc / 100).toLocaleString()}</span></div>
+            <div class="flex justify-between items-end mt-2 pt-2 border-t border-slate-100"><span class="text-sm font-bold text-slate-800">${t('total')}</span><span class="text-xl font-black text-brand-600">${total.toLocaleString()} Ks</span></div>`;
+        const mTotal = document.getElementById('mobile-cart-total'); if(mTotal) mTotal.innerText = `${total.toLocaleString()} Ks`;
     }
 
-    // HOLD ORDER
-    window.holdOrder = () => {
-        if (window.cart.length === 0) return;
-        heldOrders.push([...window.cart]);
-        window.clearCart();
-        document.getElementById('held-count').innerText = heldOrders.length;
-        document.getElementById('held-count').classList.remove('hidden');
-        alert(currentLang === 'en' ? "Order held successfully." : "အော်ဒါကို ခေတ္တဆိုင်းငံ့ထားပါသည်။");
-    };
-
+    window.holdOrder = () => { if (window.cart.length === 0) return; heldOrders.push([...window.cart]); window.clearCart(); document.getElementById('held-count').innerText = heldOrders.length; document.getElementById('held-count').classList.remove('hidden'); alert(currentLang==='mm'?"ဆိုင်းငံ့ထားပါပြီ":"Held."); };
     window.viewHeldOrders = () => {
-        if(heldOrders.length === 0) return alert(currentLang === 'en' ? "No held orders." : "ဆိုင်းငံ့ထားသော အော်ဒါမရှိပါ။");
-        let html = `<div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4"><h2 class="text-xl font-bold flex items-center gap-2 text-slate-900"><i class="ph ph-pause-circle text-orange-500"></i> ${currentLang === 'en'?'Held Orders':'ဆိုင်းငံ့ထားသော အော်ဒါများ'}</h2><button onclick="closeModal()" class="text-slate-400 hover:text-slate-700 bg-slate-50 p-2 rounded-lg transition-all"><i class="ph ph-x text-lg"></i></button></div><div class="space-y-3">`;
+        if(heldOrders.length === 0) return alert("Empty");
+        let html = `<div class="flex justify-between mb-4"><h2 class="text-lg font-bold">Held Orders</h2><button onclick="closeModal()"><i class="ph ph-x"></i></button></div><div class="space-y-2">`;
         heldOrders.forEach((order, idx) => {
-            const total = order.reduce((s, i) => s + (i.price * (i.qty || 1)), 0);
-            html += `<div class="bg-white p-4 rounded-xl border border-slate-200 flex justify-between items-center shadow-sm">
-                <div><div class="font-bold text-slate-800">Order #${idx+1}</div><div class="text-xs text-slate-500">${order.length} items | ${total.toLocaleString()} Ks</div></div>
-                <div class="flex gap-2"><button onclick="restoreOrder(${idx})" class="bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg font-bold text-sm">Restore</button><button onclick="deleteHeldOrder(${idx})" class="bg-red-50 text-red-600 p-1.5 rounded-lg"><i class="ph ph-trash"></i></button></div>
-            </div>`;
+            html += `<div class="bg-white p-3 rounded-lg border flex justify-between items-center"><div><b>Order #${idx+1}</b> <span class="text-xs">(${order.length} items)</span></div><div><button onclick="restoreOrder(${idx})" class="bg-blue-50 text-blue-600 px-3 py-1 rounded font-bold text-xs mr-2">Restore</button><button onclick="deleteHeldOrder(${idx})" class="text-red-500"><i class="ph ph-trash"></i></button></div></div>`;
         });
         openModal(html + '</div>');
     };
-
-    window.restoreOrder = (idx) => {
-        if(window.cart.length > 0) { if(!confirm("Current cart will be cleared. Continue?")) return; }
-        window.cart = [...heldOrders[idx]];
-        deleteHeldOrder(idx);
-        closeModal(); renderCart();
-    };
-    window.deleteHeldOrder = (idx) => {
-        heldOrders.splice(idx, 1);
-        document.getElementById('held-count').innerText = heldOrders.length;
-        if(heldOrders.length === 0) document.getElementById('held-count').classList.add('hidden');
-        if(document.getElementById('modal').classList.contains('hidden') === false) viewHeldOrders(); // re-render
-    };
+    window.restoreOrder = (idx) => { window.cart = [...heldOrders[idx]]; deleteHeldOrder(idx); closeModal(); renderCart(); };
+    window.deleteHeldOrder = (idx) => { heldOrders.splice(idx, 1); document.getElementById('held-count').innerText = heldOrders.length; if(heldOrders.length===0) document.getElementById('held-count').classList.add('hidden'); if(!document.getElementById('modal').classList.contains('hidden')) viewHeldOrders(); };
 
     // CHECKOUT
     document.getElementById('chk-btn').onclick = async () => {
         if (window.cart.length === 0) return;
-        const subTotal = window.cart.reduce((s, i) => s + (i.price * (i.qty || 1)), 0);
-        const disc = parseFloat(document.getElementById('discount').value) || 0;
-        const tax = parseFloat(document.getElementById('tax').value) || 0;
+        const priceType = document.querySelector('input[name="price_type"]:checked').value;
+        const subTotal = window.cart.reduce((sum, i) => { const p = priceType === 'wholesale' ? (i.wholesalePrice || i.retailPrice || i.price) : (i.retailPrice || i.price); return sum + (p * (i.qty || 1)); }, 0);
+        const totalCost = window.cart.reduce((sum, i) => sum + ((i.costPrice || 0) * (i.qty || 1)), 0); 
+        const disc = parseFloat(document.getElementById('discount').value) || 0; const tax = parseFloat(document.getElementById('tax').value) || 0;
         const total = (subTotal - (subTotal * disc / 100)) + ((subTotal - (subTotal * disc / 100)) * tax / 100);
-        const paymentMethod = document.getElementById('payment-method').value;
-        const customerId = document.getElementById('customer-select').value;
+        const paymentMethod = document.getElementById('payment-method').value; const customerId = document.getElementById('customer-select').value;
         
         try {
-            const batch = writeBatch(db);
-            const saleRef = doc(collection(db, "shops", shop_id, "sales"));
-            const itemsToSave = window.cart.map(i => ({ name: i.name, price: i.price, qty: i.qty || 1, productId: i.id, sku: i.sku }));
+            const batch = writeBatch(db); const saleRef = doc(collection(db, "shops", shop_id, "sales"));
+            const itemsToSave = window.cart.map(i => ({ 
+                name: i.name, 
+                price: priceType === 'wholesale' ? (i.wholesalePrice || i.retailPrice || i.price) : (i.retailPrice || i.price), 
+                cost: i.costPrice || 0,
+                qty: i.qty || 1, productId: i.id 
+            }));
             batch.set(saleRef, {
-                items: itemsToSave, subTotal, discount: disc, tax, total, paymentMethod, customerId: customerId || null,
-                createdAt: serverTimestamp(), userId: auth.currentUser?.uid || null
+                items: itemsToSave, subTotal, totalCost, discount: disc, tax, total, profit: total - totalCost, paymentMethod, customerId: customerId || null, createdAt: serverTimestamp(), userId: auth.currentUser?.uid || null
             });
             window.cart.forEach(item => { batch.update(doc(db, "shops", shop_id, "products", item.id), { quantity: increment(-(item.qty || 1)) }); });
-            if (customerId) { batch.update(doc(db, "shops", shop_id, "customers", customerId), { points: increment(Math.floor(total / 100)) }); }
+            
+            if(paymentMethod === 'Credit' && customerId) {
+                batch.update(doc(db, "shops", shop_id, "customers", customerId), { debt: increment(total), points: increment(Math.floor(total / 100)) });
+            } else if(customerId) {
+                batch.update(doc(db, "shops", shop_id, "customers", customerId), { points: increment(Math.floor(total / 100)) });
+            }
             await batch.commit();
-            
-            // Print receipt
             printReceipt({items: itemsToSave, total, paymentMethod, date: new Date().toLocaleString()});
-            
             window.clearCart(); document.getElementById('discount').value = 0; document.getElementById('tax').value = 0;
-            if(!document.getElementById('cart-panel').classList.contains('translate-x-full')){ toggleMobileCart(); }
+            if(!document.getElementById('cart-panel').classList.contains('translate-x-full')) toggleMobileCart();
         } catch(e) { alert('Checkout error: ' + e.message); }
     };
 
     function printReceipt(data) {
-        let h = `<center><h2 style="margin:0;font-weight:900;text-transform:uppercase;">${shop_name}</h2><p style="font-size:10px;color:#666;">VOUCHER - ${data.date}</p><hr style="border-top:1px dashed #000;margin:10px 0;"></center><table style="width:100%;font-size:12px;">`;
+        let h = `<center><img src="${shop_settings.logo || ''}" style="max-height:50px; display:${shop_settings.logo?'inline':'none'}"><h2 style="margin:5px 0 0;font-weight:900;text-transform:uppercase;">${shop_name}</h2><p style="font-size:10px;margin:2px 0;">${shop_settings.address || ''}<br>${shop_settings.phone || ''}</p><p style="font-size:10px;color:#666;">${data.date}</p><hr style="border-top:1px dashed #000;margin:10px 0;"></center><table style="width:100%;font-size:12px;">`;
         const g = data.items.reduce((a, c) => { const f = a.find(x => x.name === c.name); if (f) { f.qty+=c.qty; f.tt += (c.price*c.qty); } else { a.push({ ...c, tt: c.price*c.qty }); } return a; }, []);
         g.forEach(i => h += `<tr><td style="padding:4px 0;">${i.name} x${i.qty}</td><td align="right">${i.tt.toLocaleString()}</td></tr>`);
-        h += `</table><hr style="border-top:1px dashed #000;margin:10px 0;"><h3 align="right" style="margin:0;">TOTAL: ${data.total.toLocaleString()} Ks</h3><p align="right" style="font-size:10px;margin:2px 0;">(${data.paymentMethod})</p><center><p style="font-size:10px;margin-top:20px;">${shop_settings.footer || 'Thank you!'}</p></center>`;
+        h += `</table><hr style="border-top:1px dashed #000;margin:10px 0;"><h3 align="right" style="margin:0;">TOTAL: ${data.total.toLocaleString()}</h3><p align="right" style="font-size:10px;margin:2px 0;">(${data.paymentMethod})</p><center><p style="font-size:10px;margin-top:20px;">${shop_settings.footer || 'Thank you!'}</p></center>`;
         document.getElementById('r-p').innerHTML = h; window.print();
     }
 
-    // ---- LOAD CUSTOMERS DROPDOWN ----
     const observer = new MutationObserver(() => {
         if (!document.getElementById('pos-main').classList.contains('hidden')) {
             onSnapshot(collection(db, "shops", shop_id, "customers"), (snap) => {
                 const sel = document.getElementById('customer-select'); if (!sel) return;
                 sel.innerHTML = `<option value="">${t('walkin')}</option>`;
-                snap.forEach(d => { const c = d.data(); sel.innerHTML += `<option value="${d.id}">${c.name} (${c.points || 0} pts)</option>`; });
+                snap.forEach(d => { const c = d.data(); sel.innerHTML += `<option value="${d.id}">${c.name} (${c.debt ? c.debt+' Ks Credit' : c.points+' pts'})</option>`; });
             });
         }
-    });
-    observer.observe(document.getElementById('pos-main'), { attributes: true, attributeFilter: ['class'] });
+    }); observer.observe(document.getElementById('pos-main'), { attributes: true, attributeFilter: ['class'] });
 
-    // ---- MODALS & DIALOGS ----
     const modal = document.getElementById('modal'); const modalContent = document.getElementById('modal-content');
     function openModal(html) { modalContent.innerHTML = html; modal.classList.remove('hidden'); }
     window.closeModal = () => modal.classList.add('hidden');
     modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    const linkButtons = (idDesk, idMob, func) => { if(document.getElementById(idDesk)) document.getElementById(idDesk).onclick = func; if(document.getElementById(idMob)) document.getElementById(idMob).onclick = () => { toggleMobileMenu(); func(); }; }
 
-    const linkButtons = (idDesk, idMob, idMob2, func) => {
-        if(document.getElementById(idDesk)) document.getElementById(idDesk).onclick = func;
-        if(document.getElementById(idMob)) document.getElementById(idMob).onclick = () => { toggleMobileMenu(); func(); };
-        if(document.getElementById(idMob2)) document.getElementById(idMob2).onclick = func;
-    }
+    // ---- ERP MODALS ----
 
-    // ---- ITEMS MODAL ----
+    // 1. INVENTORY
     const showItemsModal = () => {
         openModal(`
-            <div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4"><h2 class="text-xl font-bold flex items-center gap-2 text-slate-900"><i class="ph ph-package text-slate-500"></i> ${t('inventory')}</h2><button onclick="closeModal()" class="text-slate-400 hover:text-slate-700 bg-slate-50 p-2 rounded-lg transition-all"><i class="ph ph-x text-lg"></i></button></div>
-            <div class="space-y-4 bg-slate-50 p-5 rounded-2xl border border-slate-100 mb-6">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div><label class="block text-xs font-bold text-slate-500 uppercase mb-2">Item Name *</label><input id="new-p-name" type="text" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 text-sm"></div>
-                    <div><label class="block text-xs font-bold text-slate-500 uppercase mb-2">Category *</label><input id="new-p-cat" type="text" list="cat-list" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 text-sm"><datalist id="cat-list">${Array.from(new Set(allProducts.map(p => p.category).filter(Boolean))).map(c => `<option value="${c}">`).join('')}</datalist></div>
+            <div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4"><h2 class="text-xl font-bold"><i class="ph ph-package"></i> ${t('inventory')}</h2><button onclick="closeModal()"><i class="ph ph-x"></i></button></div>
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 mb-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+                    <div class="col-span-2"><label class="text-xs font-bold text-slate-500 uppercase">Item Name *</label><input id="p-name" type="text" class="w-full p-2 border rounded-lg text-sm"></div>
+                    <div><label class="text-xs font-bold text-slate-500 uppercase">Category</label><input id="p-cat" type="text" list="cat-list" class="w-full p-2 border rounded-lg text-sm"><datalist id="cat-list">${Array.from(new Set(allProducts.map(p=>p.category).filter(Boolean))).map(c=>`<option value="${c}">`).join('')}</datalist></div>
+                    <div><label class="text-xs font-bold text-slate-500 uppercase">SKU / Barcode</label><input id="p-sku" type="text" class="w-full p-2 border rounded-lg text-sm"></div>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div><label class="block text-xs font-bold text-slate-500 uppercase mb-2">Price (Ks) *</label><input id="new-p-price" type="number" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 text-sm"></div>
-                    <div><label class="block text-xs font-bold text-slate-500 uppercase mb-2">Stock Qty *</label><input id="new-p-qty" type="number" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 text-sm"></div>
-                    <div><label class="block text-xs font-bold text-slate-500 uppercase mb-2">SKU</label><input id="new-p-sku" type="text" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 text-sm"></div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+                    <div><label class="text-xs font-bold text-slate-500 uppercase">Cost Price (Ks)</label><input id="p-cost" type="number" class="w-full p-2 border rounded-lg text-sm"></div>
+                    <div><label class="text-xs font-bold text-slate-500 uppercase">Wholesale (Ks)</label><input id="p-whole" type="number" class="w-full p-2 border rounded-lg text-sm"></div>
+                    <div><label class="text-xs font-bold text-slate-500 uppercase">Retail Price (Ks)*</label><input id="p-retail" type="number" class="w-full p-2 border rounded-lg text-sm"></div>
+                    <div><label class="text-xs font-bold text-slate-500 uppercase">Stock Qty *</label><input id="p-qty" type="number" class="w-full p-2 border rounded-lg text-sm"></div>
                 </div>
-                <div class="flex justify-end pt-2"><button id="save-item-btn" class="w-full sm:w-auto bg-slate-900 text-white px-6 py-3 rounded-xl font-bold hover:bg-black transition-all text-sm">Save Product</button></div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div><label class="text-xs font-bold text-slate-500 uppercase">Unit (ဘူး, ပါကင်)</label><input id="p-unit" type="text" class="w-full p-2 border rounded-lg text-sm"></div>
+                    <div><label class="text-xs font-bold text-slate-500 uppercase">Variant (Size/Color)</label><input id="p-var" type="text" class="w-full p-2 border rounded-lg text-sm"></div>
+                    <div class="col-span-2"><label class="text-xs font-bold text-slate-500 uppercase">Expire Date</label><input id="p-exp" type="date" class="w-full p-2 border rounded-lg text-sm"></div>
+                </div>
+                <div class="flex justify-end mt-4"><button id="save-item-btn" class="bg-brand-600 text-white px-6 py-2.5 rounded-lg font-bold text-sm">Save Product</button></div>
             </div>
-            <div id="inv-list" class="space-y-2 max-h-[35vh] overflow-y-auto no-scrollbar pr-2"></div>
+            <div id="inv-list" class="space-y-2 max-h-[30vh] overflow-y-auto pr-2"></div>
         `);
         const invList = document.getElementById('inv-list');
         allProducts.forEach(p => {
-            invList.innerHTML += `<div class="bg-white p-3 rounded-xl border border-slate-200 flex justify-between items-center"><div><span class="font-bold text-slate-800 text-sm">${p.name}</span> <span class="text-slate-500 text-[10px] bg-slate-100 px-2 py-0.5 rounded-md ml-2">${p.category || 'None'}</span><div class="text-xs font-semibold text-slate-500 mt-1">${p.price.toLocaleString()} Ks | Stock: ${p.quantity}</div></div><button onclick="deleteProduct('${p.id}')" class="text-slate-400 hover:text-red-600 bg-slate-50 p-2 rounded-lg"><i class="ph ph-trash text-lg"></i></button></div>`;
+            invList.innerHTML += `<div class="bg-white p-3 rounded-xl border flex justify-between items-center text-sm"><div><b>${p.name}</b> ${p.variant?`(${p.variant})`:''} <span class="bg-slate-100 px-1 rounded text-xs">${p.category||''}</span><br><span class="text-xs text-slate-500">Retail: ${p.retailPrice||p.price||0} | Cost: ${p.costPrice||0} | Stock: <b class="${p.quantity<=5?'text-red-500':'text-green-600'}">${p.quantity} ${p.unit||''}</b> ${p.expiryDate ? '| EXP: '+p.expiryDate : ''}</span></div><button onclick="deleteProduct('${p.id}')" class="text-red-500"><i class="ph ph-trash"></i></button></div>`;
         });
         document.getElementById('save-item-btn').onclick = async () => {
-            const name = document.getElementById('new-p-name').value.trim(), category = document.getElementById('new-p-cat').value.trim(), price = parseFloat(document.getElementById('new-p-price').value), quantity = parseInt(document.getElementById('new-p-qty').value), sku = document.getElementById('new-p-sku').value.trim();
-            if (!name || !category || isNaN(price) || isNaN(quantity)) return alert("Please fill required fields.");
-            try { await addDoc(collection(db, "shops", shop_id, "products"), { name, category, price, quantity, sku, lowStockThreshold: 5 }); showItemsModal(); } catch (err) { alert("Error: " + err.message); }
+            const name = document.getElementById('p-name').value.trim(), category = document.getElementById('p-cat').value.trim(), retailPrice = parseFloat(document.getElementById('p-retail').value), qty = parseInt(document.getElementById('p-qty').value);
+            if(!name || isNaN(retailPrice) || isNaN(qty)) return alert("Fill Name, Retail Price, Qty");
+            const data = { name, category, retailPrice, costPrice: parseFloat(document.getElementById('p-cost').value)||0, wholesalePrice: parseFloat(document.getElementById('p-whole').value)||retailPrice, quantity: qty, sku: document.getElementById('p-sku').value.trim(), unit: document.getElementById('p-unit').value.trim(), variant: document.getElementById('p-var').value.trim(), expiryDate: document.getElementById('p-exp').value, lowStockThreshold: 5 };
+            try { await addDoc(collection(db, "shops", shop_id, "products"), data); showItemsModal(); } catch (err) { alert(err.message); }
         };
     };
-    window.deleteProduct = async (id) => { if (confirm('Delete this product?')) { await deleteDoc(doc(db, "shops", shop_id, "products", id)); showItemsModal(); } };
-    linkButtons('btn-items', 'btn-items-m', 'btn-items-m2', showItemsModal);
+    window.deleteProduct = async (id) => { if(confirm('Delete?')) { await deleteDoc(doc(db, "shops", shop_id, "products", id)); showItemsModal(); } };
+    linkButtons('btn-items', 'btn-items-m', showItemsModal);
 
-    // ---- CUSTOMERS MODAL ----
+    // 2. PURCHASES 
+    const showPurchasesModal = async () => {
+        openModal(`<div class="text-center p-10">Loading...</div>`);
+        const snap = await getDocs(query(collection(db, "shops", shop_id, "purchases"), orderBy("date", "desc")));
+        let html = `<div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold"><i class="ph ph-shopping-cart"></i> ${t('purchases')}</h2><button onclick="closeModal()"><i class="ph ph-x"></i></button></div>
+        <div class="flex gap-2 mb-4"><input id="pur-desc" type="text" placeholder="Supplier / Items" class="flex-1 p-2 border rounded-lg text-sm"><input id="pur-amt" type="number" placeholder="Amount (Ks)" class="w-32 p-2 border rounded-lg text-sm"><button id="add-pur" class="bg-brand-600 text-white px-4 py-2 rounded-lg font-bold text-sm">Add</button></div>
+        <div class="space-y-2">`;
+        snap.forEach(d => { const s = d.data(); html += `<div class="bg-white p-3 rounded-lg border flex justify-between items-center text-sm"><div><b>${s.desc}</b><br><span class="text-xs text-slate-500">${s.date?.toDate().toLocaleString()}</span></div><b class="text-brand-600">${s.amount.toLocaleString()} Ks</b></div>`; });
+        openModal(html + '</div>');
+        document.getElementById('add-pur').onclick = async () => {
+            const desc = document.getElementById('pur-desc').value.trim(), amt = parseFloat(document.getElementById('pur-amt').value);
+            if(!desc || isNaN(amt)) return;
+            await addDoc(collection(db, "shops", shop_id, "purchases"), { desc, amount: amt, date: serverTimestamp() }); showPurchasesModal();
+        };
+    }; linkButtons('btn-purchases', 'btn-purchases-m', showPurchasesModal);
+
+    // 3. EXPENSES 
+    const showExpensesModal = async () => {
+        openModal(`<div class="text-center p-10">Loading...</div>`);
+        const snap = await getDocs(query(collection(db, "shops", shop_id, "expenses"), orderBy("date", "desc")));
+        let html = `<div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold"><i class="ph ph-money"></i> ${t('expenses')}</h2><button onclick="closeModal()"><i class="ph ph-x"></i></button></div>
+        <div class="flex gap-2 mb-4"><input id="exp-desc" type="text" placeholder="Expense Description" class="flex-1 p-2 border rounded-lg text-sm"><input id="exp-amt" type="number" placeholder="Amount (Ks)" class="w-32 p-2 border rounded-lg text-sm"><button id="add-exp" class="bg-brand-600 text-white px-4 py-2 rounded-lg font-bold text-sm">Add</button></div>
+        <div class="space-y-2">`;
+        snap.forEach(d => { const s = d.data(); html += `<div class="bg-white p-3 rounded-lg border flex justify-between items-center text-sm"><div><b>${s.desc}</b><br><span class="text-xs text-slate-500">${s.date?.toDate().toLocaleString()}</span></div><b class="text-red-500">-${s.amount.toLocaleString()} Ks</b></div>`; });
+        openModal(html + '</div>');
+        document.getElementById('add-exp').onclick = async () => {
+            const desc = document.getElementById('exp-desc').value.trim(), amt = parseFloat(document.getElementById('exp-amt').value);
+            if(!desc || isNaN(amt)) return;
+            await addDoc(collection(db, "shops", shop_id, "expenses"), { desc, amount: amt, date: serverTimestamp() }); showExpensesModal();
+        };
+    }; linkButtons('btn-expenses', 'btn-expenses-m', showExpensesModal);
+
+    // 4. PAYROLL 
+    const showPayrollModal = async () => {
+        openModal(`<div class="text-center p-10">Loading...</div>`);
+        const snap = await getDocs(query(collection(db, "shops", shop_id, "payroll"), orderBy("date", "desc")));
+        let html = `<div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold"><i class="ph ph-users-three"></i> ${t('payroll')}</h2><button onclick="closeModal()"><i class="ph ph-x"></i></button></div>
+        <div class="flex gap-2 mb-4"><input id="pay-name" type="text" placeholder="Staff Name / Month" class="flex-1 p-2 border rounded-lg text-sm"><input id="pay-amt" type="number" placeholder="Amount (Ks)" class="w-32 p-2 border rounded-lg text-sm"><button id="add-pay" class="bg-brand-600 text-white px-4 py-2 rounded-lg font-bold text-sm">Pay</button></div>
+        <div class="space-y-2">`;
+        snap.forEach(d => { const s = d.data(); html += `<div class="bg-white p-3 rounded-lg border flex justify-between items-center text-sm"><div><b>${s.name}</b><br><span class="text-xs text-slate-500">${s.date?.toDate().toLocaleString()}</span></div><b class="text-red-500">-${s.amount.toLocaleString()} Ks</b></div>`; });
+        openModal(html + '</div>');
+        document.getElementById('add-pay').onclick = async () => {
+            const name = document.getElementById('pay-name').value.trim(), amt = parseFloat(document.getElementById('pay-amt').value);
+            if(!name || isNaN(amt)) return;
+            await addDoc(collection(db, "shops", shop_id, "payroll"), { name, amount: amt, date: serverTimestamp() }); showPayrollModal();
+        };
+    }; linkButtons('btn-payroll', 'btn-payroll-m', showPayrollModal);
+
+    // 5. CUSTOMERS & DEBTS
     const showCustomersModal = () => {
         openModal(`
-            <div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4"><h2 class="text-xl font-bold flex items-center gap-2 text-slate-900"><i class="ph ph-users text-slate-500"></i> ${t('customers')}</h2><button onclick="closeModal()" class="text-slate-400 hover:text-slate-700 bg-slate-50 p-2 rounded-lg transition-all"><i class="ph ph-x text-lg"></i></button></div>
-            <button onclick="renderAddCustomerForm()" class="w-full bg-slate-50 border border-slate-200 border-dashed text-slate-600 hover:border-brand-500 py-3.5 rounded-xl mb-6 font-bold text-sm">+ Add New Client</button>
-            <div id="customer-list" class="space-y-3 max-h-[50vh] overflow-y-auto no-scrollbar pr-2"></div>
+            <div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold"><i class="ph ph-users"></i> ${t('customers')} & Debts</h2><button onclick="closeModal()"><i class="ph ph-x"></i></button></div>
+            <button onclick="renderAddCustomerForm()" class="w-full bg-slate-50 border border-dashed hover:border-brand-500 py-3 rounded-xl mb-4 text-sm font-bold">+ Add Client</button>
+            <div id="customer-list" class="space-y-2 max-h-[50vh] overflow-y-auto pr-2"></div>
         `);
         onSnapshot(collection(db, "shops", shop_id, "customers"), (snap) => {
             const list = document.getElementById('customer-list'); if (!list) return; list.innerHTML = '';
             snap.forEach(d => {
                 const c = d.data();
-                list.innerHTML += `<div class="bg-white p-4 rounded-xl border border-slate-200 flex justify-between items-center"><div class="flex items-center gap-4"><div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-bold text-lg">${c.name.charAt(0)}</div><div><div class="font-bold text-sm">${c.name}</div><div class="text-xs text-slate-500">${c.phone || 'No Phone'}</div></div></div><div class="flex items-center gap-4"><span class="text-slate-700 font-bold text-xs bg-slate-100 px-3 py-1 rounded-lg">${c.points || 0} PTS</span><button onclick="deleteCustomer('${d.id}')" class="text-slate-400 hover:text-red-500 p-2"><i class="ph ph-trash text-lg"></i></button></div></div>`;
+                list.innerHTML += `<div class="bg-white p-3 rounded-xl border flex justify-between items-center text-sm"><div><b>${c.name}</b><br><span class="text-xs text-slate-500">${c.phone||''} | Points: ${c.points||0}</span></div><div class="flex items-center gap-2"><span class="font-bold ${c.debt>0?'text-red-500':'text-green-600'}">${c.debt ? 'Debt: '+c.debt.toLocaleString()+' Ks' : 'Clear'}</span><button onclick="clearDebt('${d.id}')" class="text-xs bg-slate-100 px-2 py-1 rounded">Pay Debt</button><button onclick="deleteCustomer('${d.id}')" class="text-slate-400 hover:text-red-500 p-1"><i class="ph ph-trash"></i></button></div></div>`;
             });
         });
     };
     window.renderAddCustomerForm = () => {
         openModal(`
-            <div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4"><h2 class="text-xl font-bold flex items-center gap-2 text-slate-900">New Client</h2><button onclick="showCustomersModal()" class="text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg font-bold text-xs">Back</button></div>
-            <div class="space-y-4 bg-slate-50 p-5 rounded-2xl border border-slate-100">
-                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-2">Name *</label><input id="new-c-name" type="text" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm"></div>
-                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-2">Phone</label><input id="new-c-phone" type="text" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm"></div>
-                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-2">Note</label><textarea id="new-c-address" rows="2" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm"></textarea></div>
-                <div class="flex gap-3 pt-4"><button onclick="showCustomersModal()" class="flex-1 bg-white border border-slate-200 py-3 rounded-xl font-bold text-sm">Cancel</button><button id="save-cust-btn" class="flex-1 bg-slate-900 text-white py-3 rounded-xl font-bold text-sm">Save</button></div>
-            </div>
+            <div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold">New Client</h2><button onclick="showCustomersModal()" class="text-xs bg-slate-100 px-3 py-1 rounded">Back</button></div>
+            <div class="space-y-3"><input id="new-c-name" type="text" placeholder="Name *" class="w-full p-3 border rounded-xl text-sm"><input id="new-c-phone" type="text" placeholder="Phone" class="w-full p-3 border rounded-xl text-sm"><button id="save-cust-btn" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-sm">Save</button></div>
         `);
-        document.getElementById('save-cust-btn').onclick = async () => {
-            const name = document.getElementById('new-c-name').value.trim(), phone = document.getElementById('new-c-phone').value.trim(), address = document.getElementById('new-c-address').value.trim();
-            if (!name) return; try { await addDoc(collection(db, "shops", shop_id, "customers"), { name, phone, address, points: 0 }); showCustomersModal(); } catch (err) { alert(err.message); }
-        };
+        document.getElementById('save-cust-btn').onclick = async () => { const n = document.getElementById('new-c-name').value.trim(), p = document.getElementById('new-c-phone').value.trim(); if(!n) return; await addDoc(collection(db, "shops", shop_id, "customers"), { name:n, phone:p, points:0, debt:0 }); showCustomersModal(); };
     };
-    window.deleteCustomer = async (id) => { if (confirm('Delete client?')) await deleteDoc(doc(db, "shops", shop_id, "customers", id)); };
-    linkButtons('btn-customers', 'btn-customers-m', 'btn-customers-m2', showCustomersModal);
+    window.deleteCustomer = async (id) => { if (confirm('Delete?')) await deleteDoc(doc(db, "shops", shop_id, "customers", id)); };
+    window.clearDebt = async (id) => { if (confirm('Mark debt as paid?')) await updateDoc(doc(db, "shops", shop_id, "customers", id), { debt: 0 }); };
+    linkButtons('btn-customers', 'btn-customers-m', showCustomersModal);
+    linkButtons('btn-debts', 'btn-debts-m', showCustomersModal);
 
-    // ---- TRANSACTIONS HISTORY MODAL (NEW) ----
+    // 6. HISTORY
     const showHistoryModal = async () => {
-        openModal(`<div class="text-center p-10 font-bold text-slate-500">Loading...</div>`);
-        const q = query(collection(db, "shops", shop_id, "sales"), orderBy("createdAt", "desc"), limit(50));
-        const snap = await getDocs(q);
-        let html = `<div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4"><h2 class="text-xl font-bold flex items-center gap-2 text-slate-900"><i class="ph ph-receipt text-slate-500"></i> ${t('history')}</h2><button onclick="closeModal()" class="text-slate-400 hover:text-slate-700 bg-slate-50 p-2 rounded-lg transition-all"><i class="ph ph-x text-lg"></i></button></div><div class="space-y-3">`;
-        if(snap.empty) html += `<div class="text-center py-10 text-slate-400">No transactions found.</div>`;
-        snap.forEach(d => {
-            const s = d.data();
-            const dateStr = s.createdAt ? s.createdAt.toDate().toLocaleString() : 'N/A';
-            const itemsStr = s.items ? s.items.map(i=>i.name).join(', ') : '';
-            html += `<div class="bg-white p-4 rounded-xl border border-slate-200 flex justify-between items-center shadow-sm">
-                <div><div class="font-bold text-slate-800 text-sm">${dateStr}</div><div class="text-xs text-slate-500 line-clamp-1 max-w-[200px]">${itemsStr}</div></div>
-                <div class="flex items-center gap-4"><div class="text-right"><div class="font-black text-brand-600">${s.total.toLocaleString()} Ks</div><div class="text-[10px] font-bold text-slate-400 uppercase">${s.paymentMethod}</div></div>
-                <button onclick='reprintReceipt(${JSON.stringify({items: s.items, total: s.total, paymentMethod: s.paymentMethod, date: dateStr})})' class="bg-slate-100 p-2 rounded-lg text-slate-600 hover:text-brand-600"><i class="ph ph-printer text-lg"></i></button></div>
-            </div>`;
-        });
+        openModal(`<div class="text-center p-10">Loading...</div>`);
+        const snap = await getDocs(query(collection(db, "shops", shop_id, "sales"), orderBy("createdAt", "desc"), limit(50)));
+        let html = `<div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold"><i class="ph ph-receipt"></i> ${t('history')}</h2><button onclick="closeModal()"><i class="ph ph-x"></i></button></div><div class="space-y-2">`;
+        snap.forEach(d => { const s = d.data(); html += `<div class="bg-white p-3 rounded-xl border flex justify-between items-center text-sm"><div><b>${s.createdAt?s.createdAt.toDate().toLocaleString():''}</b><br><span class="text-xs text-slate-500">${s.items?s.items.map(i=>i.name).join(', '):''}</span></div><div class="text-right"><b>${s.total.toLocaleString()} Ks</b><br><span class="text-[10px] uppercase">${s.paymentMethod}</span></div></div>`; });
         openModal(html + `</div>`);
-    };
-    window.reprintReceipt = (data) => { printReceipt(data); };
-    linkButtons('btn-history', 'btn-history-m', null, showHistoryModal);
+    }; linkButtons('btn-history', 'btn-history-m', showHistoryModal);
 
-    // ---- REPORTS MODAL ----
+    // 7. REPORTS (PROFIT & LOSS)
     const showReportsModal = async () => {
-        const today = new Date(); today.setHours(0,0,0,0); const weekAgo = new Date(Date.now() - 7*86400000);
-        const salesSnap = await getDocs(query(collection(db, "shops", shop_id, "sales"), orderBy("createdAt", "desc")));
-        let todayTotal = 0, weekTotal = 0; const itemCount = {};
-        salesSnap.forEach(doc => {
-            const s = doc.data(); if (s.createdAt) { const d = s.createdAt.toDate(); if (d >= today) todayTotal += s.total; if (d >= weekAgo) weekTotal += s.total; }
-            if (s.items) s.items.forEach(it => { itemCount[it.name] = (itemCount[it.name] || 0) + it.qty; });
-        });
-        const best = Object.entries(itemCount).sort((a,b)=>b[1]-a[1]).slice(0,5).map(e=>`<div class="flex justify-between py-2 border-b border-slate-100 last:border-0"><span class="text-slate-700 text-sm font-medium">${e[0]}</span><span class="font-bold text-slate-900 text-sm">${e[1]} Sold</span></div>`).join('');
-        let invVal = 0; allProducts.forEach(p => invVal += p.price * p.quantity);
-        openModal(`
-            <div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4"><h2 class="text-xl font-bold flex items-center gap-2 text-slate-900"><i class="ph ph-chart-bar text-slate-500"></i> ${t('reports')}</h2><button onclick="closeModal()" class="text-slate-400 hover:text-slate-700 bg-slate-50 p-2 rounded-lg transition-all"><i class="ph ph-x text-lg"></i></button></div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm"><div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Today Revenue</div><div class="text-3xl font-black text-slate-900">${todayTotal.toLocaleString()} <span class="text-sm">Ks</span></div></div>
-                <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm"><div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">7-Day Revenue</div><div class="text-3xl font-black text-slate-900">${weekTotal.toLocaleString()} <span class="text-sm">Ks</span></div></div>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                <div class="bg-slate-50 border border-slate-200 p-5 rounded-2xl"><div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Inventory Value</div><div class="text-xl font-bold text-slate-800">${invVal.toLocaleString()} Ks</div></div>
-                <div class="bg-slate-50 border border-slate-200 p-5 rounded-2xl"><div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Top Items</div><div>${best || '<span class="text-sm text-slate-400">No data</span>'}</div></div>
-            </div>
-            <div class="flex justify-end pt-4 border-t border-slate-100"><button id="export-excel" class="bg-white border border-slate-200 px-6 py-2.5 rounded-xl font-bold text-sm shadow-sm">Download Excel</button></div>
-        `);
-        document.getElementById('export-excel').onclick = async () => {
-            const data = [['Date', 'Total', 'Payment', 'Items']];
-            salesSnap.forEach(d => { const s = d.data(); data.push([s.createdAt ? s.createdAt.toDate().toLocaleString() : '', s.total, s.paymentMethod, s.items ? s.items.map(i=>`${i.name}x${i.qty}`).join(', ') : '']); });
-            const ws = XLSX.utils.aoa_to_sheet(data); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, 'Sales'); XLSX.writeFile(wb, 'sales_report.xlsx');
-        };
-    };
-    linkButtons('btn-reports', 'btn-reports-m', 'btn-reports-m2', showReportsModal);
+        openModal(`<div class="text-center p-10">Calculating ERP Data...</div>`);
+        const tObj = new Date(); tObj.setHours(0,0,0,0); const today = tObj.getTime();
+        
+        const [salesS, expS, payS, purS] = await Promise.all([
+            getDocs(query(collection(db, "shops", shop_id, "sales"))),
+            getDocs(query(collection(db, "shops", shop_id, "expenses"))),
+            getDocs(query(collection(db, "shops", shop_id, "payroll"))),
+            getDocs(query(collection(db, "shops", shop_id, "purchases")))
+        ]);
 
-    // ---- SHIFT MODAL ----
+        let totalRev = 0, totalCOG = 0, totalExp = 0, totalPay = 0, totalPur = 0; let todayRev = 0;
+        salesS.forEach(d => { const s=d.data(); totalRev+=s.total; totalCOG+=(s.totalCost||0); if(s.createdAt && s.createdAt.toMillis()>=today) todayRev+=s.total; });
+        expS.forEach(d => { totalExp += d.data().amount; });
+        payS.forEach(d => { totalPay += d.data().amount; });
+        purS.forEach(d => { totalPur += d.data().amount; });
+
+        const grossProfit = totalRev - totalCOG;
+        const netProfit = grossProfit - totalExp - totalPay;
+        
+        let invCostVal = 0, invRetVal = 0;
+        allProducts.forEach(p => { invCostVal += (p.costPrice||0)*p.quantity; invRetVal += (p.retailPrice||p.price||0)*p.quantity; });
+
+        openModal(`
+            <div class="flex justify-between items-center mb-4 border-b pb-4"><h2 class="text-xl font-bold"><i class="ph ph-chart-bar"></i> Master P&L Reports</h2><button onclick="closeModal()"><i class="ph ph-x"></i></button></div>
+            
+            <div class="grid grid-cols-2 gap-3 mb-4">
+                <div class="bg-white border p-4 rounded-xl shadow-sm"><div class="text-[10px] font-bold text-slate-400 uppercase">Today Revenue</div><div class="text-xl font-black text-brand-600">${todayRev.toLocaleString()} Ks</div></div>
+                <div class="bg-white border p-4 rounded-xl shadow-sm"><div class="text-[10px] font-bold text-slate-400 uppercase">All-Time Revenue</div><div class="text-xl font-black text-brand-600">${totalRev.toLocaleString()} Ks</div></div>
+            </div>
+
+            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 border-b pb-1">Profit & Loss (P&L)</h3>
+            <div class="bg-white rounded-xl border p-4 text-sm mb-4 space-y-2 shadow-sm">
+                <div class="flex justify-between"><span>Total Revenue (Sales)</span><b>${totalRev.toLocaleString()}</b></div>
+                <div class="flex justify-between text-slate-500"><span>- Cost of Goods Sold</span><span>-${totalCOG.toLocaleString()}</span></div>
+                <div class="flex justify-between border-t border-b py-1"><span><b>Gross Profit</b> (အကြမ်းအမြတ်)</span><b class="text-blue-600">${grossProfit.toLocaleString()}</b></div>
+                <div class="flex justify-between text-red-500"><span>- Total Expenses</span><span>-${totalExp.toLocaleString()}</span></div>
+                <div class="flex justify-between text-red-500"><span>- Payroll</span><span>-${totalPay.toLocaleString()}</span></div>
+                <div class="flex justify-between border-t pt-1"><span class="text-base"><b>Net Profit</b> (အသားတင်အမြတ်)</span><b class="text-lg ${netProfit<0?'text-red-600':'text-emerald-600'}">${netProfit.toLocaleString()} Ks</b></div>
+            </div>
+
+            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 border-b pb-1">Inventory Valuation</h3>
+            <div class="bg-white rounded-xl border p-4 text-sm mb-4 shadow-sm flex justify-between">
+                <div><span class="text-slate-500 text-xs block">Cost Value (အရင်း)</span><b>${invCostVal.toLocaleString()} Ks</b></div>
+                <div class="text-right"><span class="text-slate-500 text-xs block">Retail Value (ရောင်းစျေး)</span><b>${invRetVal.toLocaleString()} Ks</b></div>
+            </div>
+            
+            <div class="bg-slate-100 p-3 rounded-lg text-xs text-center text-slate-500">Total Purchases to Suppliers: ${totalPur.toLocaleString()} Ks</div>
+        `);
+    }; linkButtons('btn-reports', 'btn-reports-m', showReportsModal);
+
+    // 8. SHIFT
     const showShiftModal = () => {
         openModal(`
-            <div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4"><h2 class="text-xl font-bold flex items-center gap-2 text-slate-900"><i class="ph ph-clock text-slate-500"></i> ${t('shifts')}</h2><button onclick="closeModal()" class="text-slate-400 hover:text-slate-700 bg-slate-50 p-2 rounded-lg transition-all"><i class="ph ph-x text-lg"></i></button></div>
-            <div class="flex gap-4 mb-8"><button id="clock-in" class="flex-1 bg-white border border-slate-200 text-slate-700 hover:border-brand-500 hover:text-brand-600 py-4 rounded-2xl font-bold flex flex-col items-center gap-2 text-sm shadow-sm"><i class="ph ph-sign-in text-2xl"></i> Clock In</button><button id="clock-out" class="flex-1 bg-white border border-slate-200 text-slate-700 hover:border-red-500 hover:text-red-600 py-4 rounded-2xl font-bold flex flex-col items-center gap-2 text-sm shadow-sm"><i class="ph ph-sign-out text-2xl"></i> Clock Out</button></div>
-            <div id="shift-log" class="space-y-3 max-h-[40vh] overflow-y-auto no-scrollbar"></div>
+            <div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold"><i class="ph ph-clock"></i> ${t('shifts')}</h2><button onclick="closeModal()"><i class="ph ph-x"></i></button></div>
+            <div class="flex gap-4 mb-4"><button id="clock-in" class="flex-1 bg-white border hover:border-brand-500 py-3 rounded-xl font-bold text-sm">Clock In</button><button id="clock-out" class="flex-1 bg-white border hover:border-red-500 py-3 rounded-xl font-bold text-sm">Clock Out</button></div>
+            <div id="shift-log" class="space-y-2 max-h-[40vh] overflow-y-auto pr-2"></div>
         `);
         document.getElementById('clock-in').onclick = () => { if(auth.currentUser) addDoc(collection(db, "shops", shop_id, "shifts"), { userId: auth.currentUser.uid, type: 'in', time: serverTimestamp() }); };
         document.getElementById('clock-out').onclick = () => { if(auth.currentUser) addDoc(collection(db, "shops", shop_id, "shifts"), { userId: auth.currentUser.uid, type: 'out', time: serverTimestamp() }); };
         onSnapshot(query(collection(db, "shops", shop_id, "shifts"), where("userId", "==", auth.currentUser.uid), orderBy("time", "desc")), (snap) => {
             const log = document.getElementById('shift-log'); if (!log) return; log.innerHTML = '';
-            snap.forEach(d => {
-                const s = d.data(); const icon = s.type === 'in' ? '<div class="bg-brand-50 p-2 rounded-lg text-brand-600"><i class="ph ph-arrow-right"></i></div>' : '<div class="bg-slate-100 p-2 rounded-lg text-slate-500"><i class="ph ph-arrow-left"></i></div>';
-                log.innerHTML += `<div class="bg-white p-3 rounded-xl border border-slate-200 flex justify-between items-center text-sm font-bold shadow-sm"><div class="flex items-center gap-3">${icon} ${s.type === 'in' ? 'Clocked In' : 'Clocked Out'}</div><div class="text-slate-400 text-xs">${s.time?.toDate().toLocaleString()}</div></div>`;
-            });
+            snap.forEach(d => { const s = d.data(); log.innerHTML += `<div class="bg-white p-3 rounded-xl border flex justify-between text-sm font-bold shadow-sm"><div>${s.type==='in'?'In':'Out'}</div><div class="text-slate-400 text-xs">${s.time?.toDate().toLocaleString()}</div></div>`; });
         });
-    };
-    linkButtons('btn-shift', 'btn-shift-m', null, showShiftModal);
+    }; linkButtons('btn-shift', 'btn-shift-m', showShiftModal);
 
-    // ---- SETTINGS MODAL (NEW) ----
+
     const showSettingsModal = () => {
         openModal(`
-            <div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4"><h2 class="text-xl font-bold flex items-center gap-2 text-slate-900"><i class="ph ph-gear text-slate-500"></i> <span data-i18n="set_title">${t('set_title')}</span></h2><button onclick="closeModal()" class="text-slate-400 hover:text-slate-700 bg-slate-50 p-2 rounded-lg transition-all"><i class="ph ph-x text-lg"></i></button></div>
-            <div class="space-y-4 bg-slate-50 p-5 rounded-2xl border border-slate-100">
-                <div><label data-i18n="set_name" class="block text-xs font-bold text-slate-500 uppercase mb-2">${t('set_name')}</label><input id="set-name" type="text" value="${shop_settings.shopName || shop_name}" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm font-bold"></div>
-                <div><label data-i18n="set_foot" class="block text-xs font-bold text-slate-500 uppercase mb-2">${t('set_foot')}</label><input id="set-foot" type="text" value="${shop_settings.footer || 'Thank you!'}" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm font-bold"></div>
-                <div class="pt-4"><button id="save-set-btn" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-sm"><span data-i18n="save">${t('save')}</span></button></div>
+            <div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold"><i class="ph ph-gear"></i> ${t('settings')}</h2><button onclick="closeModal()"><i class="ph ph-x"></i></button></div>
+            <div class="space-y-3 bg-slate-50 p-4 rounded-2xl border">
+                <div><label class="block text-xs font-bold text-slate-500 mb-1">Store Name</label><input id="set-name" type="text" value="${shop_settings.shopName || shop_name}" class="w-full p-3 border rounded-xl text-sm font-bold"></div>
+                <div><label class="block text-xs font-bold text-slate-500 mb-1">Phone Number</label><input id="set-phone" type="text" value="${shop_settings.phone || ''}" class="w-full p-3 border rounded-xl text-sm"></div>
+                <div><label class="block text-xs font-bold text-slate-500 mb-1">Address</label><input id="set-add" type="text" value="${shop_settings.address || ''}" class="w-full p-3 border rounded-xl text-sm"></div>
+                <div><label class="block text-xs font-bold text-slate-500 mb-1">Receipt Footer Note</label><input id="set-foot" type="text" value="${shop_settings.footer || 'Thank you!'}" class="w-full p-3 border rounded-xl text-sm"></div>
+                <div><label class="block text-xs font-bold text-slate-500 mb-1">Logo URL (Optional)</label><input id="set-logo" type="text" value="${shop_settings.logo || ''}" placeholder="https://..." class="w-full p-3 border rounded-xl text-sm"></div>
+                <div class="pt-2"><button id="save-set-btn" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-sm">Save Settings</button></div>
             </div>
+            <p class="text-xs text-slate-400 mt-4 text-center">Note: Printing uses standard browser printing. Works with Bluetooth/Thermal printers via standard setup.</p>
         `);
         document.getElementById('save-set-btn').onclick = async () => {
-            const n = document.getElementById('set-name').value.trim();
-            const f = document.getElementById('set-foot').value.trim();
+            const n = document.getElementById('set-name').value.trim(), f = document.getElementById('set-foot').value.trim(), p = document.getElementById('set-phone').value.trim(), a = document.getElementById('set-add').value.trim(), l = document.getElementById('set-logo').value.trim();
             try {
-                await setDoc(doc(db, "shops", shop_id, "settings", "general"), { shopName: n, footer: f }, { merge: true });
-                shop_settings = { shopName: n, footer: f };
-                shop_name = n; updateText('s-name', n);
-                alert(currentLang === 'en' ? "Settings saved." : "ဆက်တင်များကို သိမ်းဆည်းပြီးပါပြီ။");
-                closeModal();
-            } catch(e) { alert("Error: " + e.message); }
+                await setDoc(doc(db, "shops", shop_id, "settings", "general"), { shopName: n, footer: f, phone: p, address: a, logo: l }, { merge: true });
+                shop_settings = { shopName: n, footer: f, phone: p, address: a, logo: l }; shop_name = n; updateText('s-name', n);
+                alert("Saved!"); closeModal();
+            } catch(e) { alert(e.message); }
         };
-    };
-    linkButtons('btn-settings', 'btn-settings-m', null, showSettingsModal);
+    }; linkButtons('btn-settings', 'btn-settings-m', showSettingsModal);
 
 </script>
 </body>
