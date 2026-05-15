@@ -27,7 +27,7 @@
         }
     </script>
     <style>
-        /* Print Fix (အဖြူကြီးမပေါ်အောင် ရှင်းလင်းထားသည်) */
+        /* Print Fix */
         @media print { 
             @page { margin: 0; }
             html, body { height: auto !important; overflow: visible !important; background: white !important; }
@@ -50,7 +50,7 @@
 <body class="bg-slate-50 h-[100dvh] flex flex-col text-slate-800 overflow-hidden w-full selection:bg-brand-500/20 relative">
 
 <div id="offline-badge" class="hidden fixed top-4 right-4 bg-red-600 text-white px-4 py-2 rounded-xl font-bold text-sm shadow-lg z-[100] flex items-center gap-2 transition-all">
-    <i class="ph ph-wifi-slash text-lg"></i> Offline (Auto-syncs when online)
+    <i class="ph ph-wifi-slash text-lg"></i> Offline Mode (Auto-syncs when online)
 </div>
 
 <div id="pos-login" class="flex items-center justify-center h-[100dvh] bg-slate-50 z-50 absolute inset-0 p-4">
@@ -90,7 +90,6 @@
             <button id="btn-payroll" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-users-three text-lg"></i> <span data-i18n="payroll">Payroll</span></button>
             <button id="btn-history" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-receipt text-lg"></i> <span data-i18n="history">Transactions</span></button>
             <button id="btn-reports" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-chart-line-up text-lg"></i> <span data-i18n="reports">Reports</span></button>
-            <button id="btn-shift" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-clock text-lg"></i> <span data-i18n="shifts">Shift Logs</span></button>
             <button id="btn-settings" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-gear text-lg"></i> <span data-i18n="settings">Settings</span></button>
         </div>
 
@@ -491,12 +490,23 @@
     };
 
     function printReceipt(data) {
+        let isOnline = navigator.onLine;
+        let logoHtml = (isOnline && shop_settings.logo) ? `<img src="${shop_settings.logo}" style="max-height:50px; margin-bottom:5px;">` : '';
         let custLine = data.customer && data.customer !== 'Walk-in' ? `<p style="font-size:10px;margin:2px 0;font-weight:bold;">[${data.customer}]</p>` : '';
-        let h = `<center><img src="${shop_settings.logo || ''}" style="max-height:50px; display:${shop_settings.logo?'inline':'none'}"><h2 style="margin:5px 0 0;font-weight:900;text-transform:uppercase;">${shop_name}</h2><p style="font-size:10px;margin:2px 0;">${shop_settings.address || ''}<br>${shop_settings.phone || ''}</p><p style="font-size:10px;color:#666;">${data.date}</p>${custLine}<hr style="border-top:1px dashed #000;margin:10px 0;"></center><table style="width:100%;font-size:12px;">`;
+        
+        let h = `<center>${logoHtml}<h2 style="margin:0;font-weight:900;text-transform:uppercase;">${shop_name}</h2><p style="font-size:10px;margin:2px 0;">${shop_settings.address || ''}<br>${shop_settings.phone || ''}</p><p style="font-size:10px;color:#666;">${data.date}</p>${custLine}<hr style="border-top:1px dashed #000;margin:10px 0;"></center><table style="width:100%;font-size:12px;">`;
+        
         const g = data.items.reduce((a, c) => { const f = a.find(x => x.name === c.name); if (f) { f.qty+=c.qty; f.tt += (c.price*c.qty); } else { a.push({ ...c, tt: c.price*c.qty }); } return a; }, []);
         g.forEach(i => h += `<tr><td style="padding:4px 0;">${i.name} x${i.qty}</td><td align="right">${i.tt.toLocaleString()}</td></tr>`);
+        
         h += `</table><hr style="border-top:1px dashed #000;margin:10px 0;"><h3 align="right" style="margin:0;">TOTAL: ${data.total.toLocaleString()} Ks</h3><p align="right" style="font-size:10px;margin:2px 0;">(${data.paymentMethod})</p><center><p style="font-size:10px;margin-top:20px;">${shop_settings.footer || 'Thank you!'}</p></center>`;
-        document.getElementById('r-p').innerHTML = h; window.print();
+        
+        document.getElementById('r-p').innerHTML = h; 
+        
+        // Timeout added for rendering DOM before print
+        setTimeout(() => {
+            window.print();
+        }, 400); 
     }
 
     const observer = new MutationObserver(() => {
@@ -910,7 +920,7 @@
                 <div><label class="block text-xs font-bold text-slate-500 mb-1">Logo URL (Optional)</label><input id="set-logo" type="text" value="${shop_settings.logo || ''}" placeholder="https://..." class="w-full p-3 border rounded-xl text-sm"></div>
                 <div class="pt-2"><button id="save-set-btn" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-sm">Save Settings</button></div>
             </div>
-            <p class="text-xs text-slate-400 mt-4 text-center">Note: Printing uses standard browser printing. Works with Bluetooth/Thermal printers via standard setup.</p>
+            <p class="text-[11px] text-slate-400 mt-4 text-center">Note: Printing uses standard browser printing. Works with Bluetooth/Thermal printers via standard setup.</p>
         `);
         document.getElementById('save-set-btn').onclick = async () => {
             const n = document.getElementById('set-name').value.trim(), f = document.getElementById('set-foot').value.trim(), p = document.getElementById('set-phone').value.trim(), a = document.getElementById('set-add').value.trim(), l = document.getElementById('set-logo').value.trim();
