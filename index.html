@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Swift POS - Ultimate ERP System</title>
+    <title>Swift POS - Ultimate Offline ERP</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4f46e5">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3138/3138502.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -22,7 +27,7 @@
         }
     </script>
     <style>
-        /* Print Fix */
+        /* Print Fix (အဖြူကြီးမပေါ်အောင် ရှင်းလင်းထားသည်) */
         @media print { 
             @page { margin: 0; }
             html, body { height: auto !important; overflow: visible !important; background: white !important; }
@@ -42,7 +47,11 @@
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
 </head>
-<body class="bg-slate-50 h-[100dvh] flex flex-col text-slate-800 overflow-hidden w-full selection:bg-brand-500/20">
+<body class="bg-slate-50 h-[100dvh] flex flex-col text-slate-800 overflow-hidden w-full selection:bg-brand-500/20 relative">
+
+<div id="offline-badge" class="hidden fixed top-4 right-4 bg-red-600 text-white px-4 py-2 rounded-xl font-bold text-sm shadow-lg z-[100] flex items-center gap-2 transition-all">
+    <i class="ph ph-wifi-slash text-lg"></i> Offline (Auto-syncs when online)
+</div>
 
 <div id="pos-login" class="flex items-center justify-center h-[100dvh] bg-slate-50 z-50 absolute inset-0 p-4">
     <div class="bg-white p-8 sm:p-12 rounded-3xl shadow-xl shadow-slate-200/50 w-full max-w-md border border-slate-100 text-center relative">
@@ -73,13 +82,14 @@
             <p data-i18n="nav" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3 ml-2 mt-2">Navigation</p>
             <button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg bg-brand-50 text-brand-700 font-semibold transition text-sm"><i class="ph ph-squares-four text-lg"></i> <span data-i18n="pos">Point of Sale</span></button>
             <button id="btn-items" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-package text-lg"></i> <span data-i18n="inventory">Inventory</span></button>
+            <button id="btn-cod" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-truck text-lg text-orange-500"></i> <span data-i18n="cod">COD Tracking</span></button>
             <button id="btn-purchases" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-shopping-cart text-lg"></i> <span data-i18n="purchases">Purchases</span></button>
             <button id="btn-customers" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-users text-lg"></i> <span data-i18n="customers">Customers</span></button>
-            <button id="btn-debts" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-credit-card text-lg"></i> <span data-i18n="debts">Debts & Credits</span></button>
+            <button id="btn-debts" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-credit-card text-lg"></i> <span data-i18n="debts">Debts</span></button>
             <button id="btn-expenses" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-money text-lg"></i> <span data-i18n="expenses">Expenses</span></button>
             <button id="btn-payroll" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-users-three text-lg"></i> <span data-i18n="payroll">Payroll</span></button>
             <button id="btn-history" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-receipt text-lg"></i> <span data-i18n="history">Transactions</span></button>
-            <button id="btn-reports" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-chart-line-up text-lg"></i> <span data-i18n="reports">Reports (P&L)</span></button>
+            <button id="btn-reports" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-chart-line-up text-lg"></i> <span data-i18n="reports">Reports</span></button>
             <button id="btn-shift" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-clock text-lg"></i> <span data-i18n="shifts">Shift Logs</span></button>
             <button id="btn-settings" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition text-sm"><i class="ph ph-gear text-lg"></i> <span data-i18n="settings">Settings</span></button>
         </div>
@@ -163,7 +173,9 @@
             </div>
             <div class="mb-4 bg-white border border-slate-200 rounded-xl p-2.5 flex items-center shadow-sm focus-within:border-brand-500 transition"><div class="bg-indigo-50 p-1.5 rounded-lg ml-1 mr-2"><i class="ph ph-wallet text-brand-600"></i></div>
                 <select id="payment-method" class="w-full bg-transparent border-none outline-none text-sm font-semibold text-slate-700 appearance-none cursor-pointer">
-                    <option value="Cash">Cash</option><option value="Card">Card</option><option value="KPay">KPay</option><option value="WavePay">WavePay</option><option value="AYA Pay">AYA PAY</option><option value="Credit">Credit (အကြွေး)</option>
+                    <option value="Cash">Cash</option><option value="Card">Card</option><option value="KPay">KPay</option><option value="WavePay">WavePay</option><option value="AYA Pay">AYA PAY</option>
+                    <option value="COD">COD (ငွေချေစနစ်)</option>
+                    <option value="Credit">Credit (အကြွေး)</option>
                 </select>
                 <i class="ph ph-caret-down text-slate-400 text-xs pr-2"></i>
             </div>
@@ -207,14 +219,14 @@
     window.currentLang = 'en';
     const dict = {
         en: {
-            nav: "Navigation", pos: "Point of Sale", inventory: "Inventory", customers: "Customers", purchases: "Purchases", expenses: "Expenses", payroll: "Payroll", debts: "Debts & Credit", history: "Transactions", reports: "Reports (P&L)", shifts: "Shift Logs", settings: "Settings", language: "Language", signout: "Sign Out",
+            nav: "Navigation", pos: "Point of Sale", inventory: "Inventory", cod: "COD Tracking", customers: "Customers", purchases: "Purchases", expenses: "Expenses", payroll: "Payroll", debts: "Debts & Credit", history: "Transactions", reports: "Reports (P&L)", shifts: "Shift Logs", settings: "Settings", language: "Language", signout: "Sign Out",
             search: "Search product...", order: "Current Order", walkin: "Walk-in Customer", empty: "Cart is empty", clear: "Clear", disc: "Disc%", tax: "Tax%", subtotal: "Subtotal", discount: "Discount", total: "Total", pay: "Charge & Print", total_bal: "Total Balance", view_order: "View Order", hold: "Hold Order",
-            set_title: "Store Settings", set_name: "Store Name", set_foot: "Receipt Footer", save: "Save Settings", add: "Add New"
+            set_title: "Store Settings", set_name: "Store Name", set_foot: "Receipt Footer", save: "Save Settings", add: "Add New", pending: "Pending", collected: "Collected", collect: "Collect"
         },
         mm: {
-            nav: "မီနူးများ", pos: "အရောင်းမှတ်စနစ်", inventory: "ကုန်စည်စာရင်း", customers: "ဖောက်သည်များ", purchases: "အဝယ်စာရင်း", expenses: "ကုန်ကျစရိတ်များ", payroll: "ဝန်ထမ်းလစာစရိတ်", debts: "အကြွေးစာရင်းများ", history: "အရောင်းမှတ်တမ်း", reports: "အရှုံးအမြတ် အစီရင်ခံစာ", shifts: "အလုပ်ချိန်မှတ်တမ်း", settings: "ဆက်တင်များ", language: "ဘာသာစကား", signout: "အကောင့်ထွက်မည်",
+            nav: "မီနူးများ", pos: "အရောင်းမှတ်စနစ်", inventory: "ကုန်စည်စာရင်း", cod: "COD မှတ်တမ်း", customers: "ဖောက်သည်များ", purchases: "အဝယ်စာရင်း", expenses: "ကုန်ကျစရိတ်များ", payroll: "ဝန်ထမ်းလစာစရိတ်", debts: "အကြွေးစာရင်း", history: "အရောင်းမှတ်တမ်း", reports: "အရှုံးအမြတ် အစီရင်ခံစာ", shifts: "အလုပ်ချိန်မှတ်တမ်း", settings: "ဆက်တင်များ", language: "ဘာသာစကား", signout: "အကောင့်ထွက်မည်",
             search: "ပစ္စည်းရှာရန်...", order: "လက်ရှိအော်ဒါ", walkin: "ပုံမှန်ဝယ်သူ", empty: "ခြင်းတောင်းလွတ်နေပါသည်", clear: "ဖျက်မည်", disc: "လျှော့စျေး%", tax: "အခွန်%", subtotal: "ကျသင့်ငွေ", discount: "လျှော့ငွေ", total: "စုစုပေါင်း", pay: "ငွေရှင်း & ဘေလ်ထုတ်မည်", total_bal: "စုစုပေါင်း ကျသင့်ငွေ", view_order: "အော်ဒါကြည့်မည်", hold: "ခေတ္တဆိုင်းငံ့မည်",
-            set_title: "ဆိုင် ဆက်တင်များ", set_name: "ဆိုင်အမည်", set_foot: "ဘေလ်အောက်ဆုံးစာသား", save: "သိမ်းမည်", add: "အသစ်ထည့်မည်"
+            set_title: "ဆိုင် ဆက်တင်များ", set_name: "ဆိုင်အမည်", set_foot: "ဘေလ်အောက်ဆုံးစာသား", save: "သိမ်းမည်", add: "အသစ်ထည့်မည်", pending: "ငွေမရသေး", collected: "ငွေရပြီး", collect: "ငွေရပြီ"
         }
     };
     window.t = (key) => dict[currentLang][key] || key;
@@ -232,6 +244,7 @@
     document.getElementById('mob-nav-links').innerHTML = `
         <button onclick="toggleMobileMenu()" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg bg-brand-50 text-brand-700 font-semibold text-sm"><i class="ph ph-squares-four text-lg"></i> <span data-i18n="pos">Point of Sale</span></button>
         <button id="btn-items-m" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 text-sm"><i class="ph ph-package text-lg"></i> <span data-i18n="inventory">Inventory</span></button>
+        <button id="btn-cod-m" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 text-sm"><i class="ph ph-truck text-lg text-orange-500"></i> <span data-i18n="cod">COD Tracking</span></button>
         <button id="btn-purchases-m" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 text-sm"><i class="ph ph-shopping-cart text-lg"></i> <span data-i18n="purchases">Purchases</span></button>
         <button id="btn-customers-m" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 text-sm"><i class="ph ph-users text-lg"></i> <span data-i18n="customers">Customers</span></button>
         <button id="btn-debts-m" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 text-sm"><i class="ph ph-credit-card text-lg"></i> <span data-i18n="debts">Debts</span></button>
@@ -443,7 +456,6 @@
         const total = (subTotal - (subTotal * disc / 100)) + ((subTotal - (subTotal * disc / 100)) * tax / 100);
         const paymentMethod = document.getElementById('payment-method').value; 
         
-        // Handle Customer Type
         const custVal = document.getElementById('customer-select').value;
         const isGeneric = ['Walk-in', 'Phone Order', 'Online'].includes(custVal);
         const customerId = isGeneric ? null : custVal;
@@ -457,8 +469,10 @@
                 cost: i.costPrice || 0,
                 qty: i.qty || 1, productId: i.id 
             }));
+            
             batch.set(saleRef, {
                 items: itemsToSave, subTotal, totalCost, discount: disc, tax, total, profit: total - totalCost, paymentMethod, 
+                codStatus: paymentMethod === 'COD' ? 'Pending' : null, 
                 customerType: custVal, customerId: customerId, customerName: customerName,
                 createdAt: serverTimestamp(), userId: auth.currentUser?.uid || null
             });
@@ -584,7 +598,65 @@
     window.deleteProduct = async (id) => { if(confirm('Are you sure you want to delete this product?')) { await deleteDoc(doc(db, "shops", shop_id, "products", id)); showItemsModal(); } };
     linkButtons('btn-items', 'btn-items-m', showItemsModal);
 
-    // 2. PURCHASES 
+    // 2. COD TRACKING
+    const showCODModal = async () => {
+        openModal(`<div class="text-center p-10 font-bold text-slate-500">Loading COD Data...</div>`);
+        const snap = await getDocs(query(collection(db, "shops", shop_id, "sales"), where("paymentMethod", "==", "COD")));
+        
+        let codSales = [];
+        snap.forEach(d => codSales.push({ id: d.id, ...d.data() }));
+        codSales.sort((a,b) => (b.createdAt?.toMillis() || 0) - (a.createdAt?.toMillis() || 0));
+
+        let pendingCount = 0; let pendingTotal = 0;
+        let listHtml = '';
+
+        if (codSales.length === 0) listHtml = `<div class="text-center py-10 text-slate-400">No COD orders found.</div>`;
+
+        codSales.forEach(s => {
+            const isPending = s.codStatus === 'Pending';
+            if (isPending) { pendingCount++; pendingTotal += s.total; }
+
+            const dateStr = s.createdAt ? s.createdAt.toDate().toLocaleString() : '';
+            const statusBadge = isPending
+                ? `<span class="bg-orange-100 text-orange-600 px-2 py-1 rounded text-xs font-bold">${t('pending')}</span>`
+                : `<span class="bg-emerald-100 text-emerald-600 px-2 py-1 rounded text-xs font-bold">${t('collected')}</span>`;
+
+            const btn = isPending
+                ? `<button onclick="collectCOD('${s.id}')" class="bg-brand-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm hover:bg-brand-700 transition">${t('collect')}</button>`
+                : `<span class="text-xs text-slate-400 font-bold">${s.collectedAt ? new Date(s.collectedAt.toMillis()).toLocaleDateString() : ''}</span>`;
+
+            listHtml += `<div class="bg-white p-4 rounded-xl border flex justify-between items-center shadow-sm">
+                <div>
+                    <div class="font-bold text-sm text-slate-800 line-clamp-1 max-w-[200px]">${s.items.map(i=>i.name).join(', ')}</div>
+                    <div class="text-xs font-medium text-slate-500 mt-1">${dateStr}</div>
+                </div>
+                <div class="flex items-center gap-4 text-right">
+                    <div>
+                        <div class="font-black text-brand-600">${s.total.toLocaleString()} Ks</div>
+                        <div class="mt-1">${statusBadge}</div>
+                    </div>
+                    ${btn}
+                </div>
+            </div>`;
+        });
+
+        const headerHtml = `<div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold flex items-center gap-2 text-slate-900"><i class="ph ph-truck text-orange-500"></i> ${t('cod')}</h2><button onclick="closeModal()" class="text-slate-400 hover:text-slate-700 bg-slate-50 p-2 rounded-lg transition-all"><i class="ph ph-x text-lg"></i></button></div>
+        <div class="bg-brand-50 border border-brand-100 p-4 rounded-xl mb-4 flex justify-between items-center">
+            <div><div class="text-xs font-bold text-brand-600 uppercase">Pending COD Total</div><div class="text-xl font-black text-brand-700">${pendingTotal.toLocaleString()} Ks <span class="text-sm font-bold text-brand-500">(${pendingCount} Orders)</span></div></div>
+        </div>`;
+
+        openModal(headerHtml + `<div class="space-y-3 max-h-[50vh] overflow-y-auto no-scrollbar pr-2">` + listHtml + `</div>`);
+    };
+
+    window.collectCOD = async (id) => {
+        if(confirm(currentLang === 'en' ? 'Mark this COD order as Collected?' : 'ဒီ COD ကို ငွေရပြီအဖြစ် သတ်မှတ်မလား?')) {
+            await updateDoc(doc(db, "shops", shop_id, "sales", id), { codStatus: 'Collected', collectedAt: serverTimestamp() });
+            showCODModal();
+        }
+    };
+    linkButtons('btn-cod', 'btn-cod-m', showCODModal);
+
+    // 3. PURCHASES 
     const showPurchasesModal = async () => {
         openModal(`<div class="text-center p-10 font-bold text-slate-500">Loading...</div>`);
         const snap = await getDocs(query(collection(db, "shops", shop_id, "purchases"), orderBy("date", "desc")));
@@ -600,7 +672,7 @@
         };
     }; linkButtons('btn-purchases', 'btn-purchases-m', showPurchasesModal);
 
-    // 3. EXPENSES 
+    // 4. EXPENSES 
     const showExpensesModal = async () => {
         openModal(`<div class="text-center p-10 font-bold text-slate-500">Loading...</div>`);
         const snap = await getDocs(query(collection(db, "shops", shop_id, "expenses"), orderBy("date", "desc")));
@@ -616,7 +688,7 @@
         };
     }; linkButtons('btn-expenses', 'btn-expenses-m', showExpensesModal);
 
-    // 4. PAYROLL 
+    // 5. PAYROLL 
     const showPayrollModal = async () => {
         openModal(`<div class="text-center p-10 font-bold text-slate-500">Loading...</div>`);
         const snap = await getDocs(query(collection(db, "shops", shop_id, "payroll"), orderBy("date", "desc")));
@@ -632,7 +704,7 @@
         };
     }; linkButtons('btn-payroll', 'btn-payroll-m', showPayrollModal);
 
-    // 5. CUSTOMERS & DEBTS
+    // 6. CUSTOMERS & DEBTS
     const showCustomersModal = () => {
         openModal(`
             <div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold flex items-center gap-2"><i class="ph ph-users text-slate-500"></i> ${t('customers')} & Debts</h2><button onclick="closeModal()" class="bg-slate-50 p-2 rounded-lg"><i class="ph ph-x"></i></button></div>
@@ -659,7 +731,7 @@
     linkButtons('btn-customers', 'btn-customers-m', showCustomersModal);
     linkButtons('btn-debts', 'btn-debts-m', showCustomersModal);
 
-    // 6. HISTORY + EDIT SALE
+    // 7. HISTORY + EDIT SALE
     const showHistoryModal = async () => {
         openModal(`<div class="text-center p-10 font-bold text-slate-500">Loading...</div>`);
         const snap = await getDocs(query(collection(db, "shops", shop_id, "sales"), orderBy("createdAt", "desc"), limit(50)));
@@ -759,7 +831,7 @@
         };
     };
 
-    // 7. REPORTS (PROFIT & LOSS)
+    // 8. REPORTS (PROFIT & LOSS)
     const showReportsModal = async () => {
         openModal(`<div class="text-center p-10 font-bold text-slate-500">Calculating ERP Data...</div>`);
         const tObj = new Date(); tObj.setHours(0,0,0,0); const today = tObj.getTime();
@@ -811,7 +883,7 @@
         `);
     }; linkButtons('btn-reports', 'btn-reports-m', showReportsModal);
 
-    // 8. SHIFT
+    // 9. SHIFT
     const showShiftModal = () => {
         openModal(`
             <div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold flex items-center gap-2"><i class="ph ph-clock text-slate-500"></i> ${t('shifts')}</h2><button onclick="closeModal()" class="bg-slate-50 p-2 rounded-lg"><i class="ph ph-x"></i></button></div>
@@ -826,7 +898,7 @@
         });
     }; linkButtons('btn-shift', 'btn-shift-m', showShiftModal);
 
-    // 9. SETTINGS
+    // 10. SETTINGS
     const showSettingsModal = () => {
         openModal(`
             <div class="flex justify-between items-center mb-6 border-b pb-4"><h2 class="text-xl font-bold flex items-center gap-2"><i class="ph ph-gear text-slate-500"></i> ${t('settings')}</h2><button onclick="closeModal()" class="bg-slate-50 p-2 rounded-lg"><i class="ph ph-x"></i></button></div>
@@ -838,6 +910,7 @@
                 <div><label class="block text-xs font-bold text-slate-500 mb-1">Logo URL (Optional)</label><input id="set-logo" type="text" value="${shop_settings.logo || ''}" placeholder="https://..." class="w-full p-3 border rounded-xl text-sm"></div>
                 <div class="pt-2"><button id="save-set-btn" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-sm">Save Settings</button></div>
             </div>
+            <p class="text-xs text-slate-400 mt-4 text-center">Note: Printing uses standard browser printing. Works with Bluetooth/Thermal printers via standard setup.</p>
         `);
         document.getElementById('save-set-btn').onclick = async () => {
             const n = document.getElementById('set-name').value.trim(), f = document.getElementById('set-foot').value.trim(), p = document.getElementById('set-phone').value.trim(), a = document.getElementById('set-add').value.trim(), l = document.getElementById('set-logo').value.trim();
@@ -848,6 +921,20 @@
             } catch(e) { alert(e.message); }
         };
     }; linkButtons('btn-settings', 'btn-settings-m', showSettingsModal);
+
+    // ---- PWA Service Worker & Offline Detector ----
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then(reg => console.log('PWA Setup Successful!'))
+                .catch(err => console.log('PWA Setup Failed: ', err));
+        });
+    }
+
+    const offlineBadge = document.getElementById('offline-badge');
+    window.addEventListener('online', () => { offlineBadge.classList.add('hidden'); alert("Back Online! Data is syncing to Cloud."); });
+    window.addEventListener('offline', () => { offlineBadge.classList.remove('hidden'); });
+    if (!navigator.onLine) offlineBadge.classList.remove('hidden');
 
 </script>
 </body>
